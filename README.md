@@ -1,5 +1,5 @@
 <h1 align="center">🪴 NEO STORE PLANTS</h1>
-<img src="https://images.unsplash.com/photo-hero-plant" alt="NeoStore Preview" width="100%"/>
+<img src="https://neostore-commerce.vercel.app/preview.png" alt="NeoStore Preview" width="100%"/>
 <p align="center">
   <i>"Discover & buy the most popular plants — your green companion at home."</i>
 </p>
