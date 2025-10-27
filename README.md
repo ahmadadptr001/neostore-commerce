@@ -1,7 +1,7 @@
-<h1 align="center">🪴 NEO STORE PLANTS</h1>
+<h1 align="center">🛍️ NEO STORE</h1>
 <img src="https://neostore-commerce.vercel.app/preview.png" alt="NeoStore Preview" width="100%"/>
 <p align="center">
-  <i>"Discover & buy the most popular plants — your green companion at home."</i>
+  <i>"Discover & shop the most popular products — easy, fast, and interactive."</i>
 </p>
 
 <p align="center">
@@ -24,22 +24,22 @@
 
 ## 🪄 Tentang Proyek
 
-**Neo Store Plants** adalah toko online berbasis web yang menampilkan **produk tanaman populer** secara interaktif.  
-Dibangun menggunakan **Next.js**, **React**, **Tailwind CSS**, dan **Lucide icons**.  
-Cocok untuk pengguna yang ingin belanja tanaman dengan pengalaman visual yang menarik.
+**Neo Store** adalah aplikasi **e-commerce** berbasis web yang menampilkan **produk populer dan terbaru** secara interaktif.  
+Dibangun menggunakan **Next.js**, **React**, **Tailwind CSS**, dan **Lucide Icons**.  
+Cocok untuk pengguna yang ingin belanja online dengan pengalaman visual yang menarik dan interaktif.
 
 ---
 
 ## ✨ Fitur Utama
 
-| 🌟 Fitur                      | 🧩 Deskripsi                                                        |
-| :---------------------------- | :------------------------------------------------------------------ |
-| 🖼️ **Produk Best Seller**     | Tampilan produk populer dengan scroll horizontal interaktif.        |
-| 🗂️ **Kategori & Filter**      | Pilih produk berdasarkan kategori atau harga.                       |
-| 💳 **Keranjang Belanja**      | Tambahkan produk ke keranjang dengan jumlah sesuai kebutuhan.       |
-| 🔍 **Pencarian Cepat**        | Cari produk berdasarkan nama atau deskripsi.                        |
-| 🌐 **Responsive Layout**      | Bisa diakses dari desktop maupun mobile dengan UI yang adaptif.     |
-| 🎨 **Hover & Animasi Produk** | Animasi ringan untuk pengalaman interaktif yang lebih menyenangkan. |
+| 🌟 Fitur                      | 🧩 Deskripsi                                                                  |
+| :---------------------------- | :---------------------------------------------------------------------------- |
+| 🖼️ **Best Selling Products**  | Tampilan produk terlaris dengan scroll horizontal interaktif.                 |
+| 🗂️ **Kategori & Filter**      | Pilih produk berdasarkan kategori, harga, atau popularitas.                   |
+| 💳 **Keranjang Belanja**      | Tambahkan produk ke keranjang dan lihat total harga.                          |
+| 🔍 **Pencarian Cepat**        | Cari produk berdasarkan nama atau deskripsi.                                  |
+| 🌐 **Responsive Layout**      | Bisa diakses dari desktop maupun perangkat mobile.                            |
+| 🎨 **Hover & Animasi Produk** | Efek hover dan animasi ringan untuk pengalaman interaktif lebih menyenangkan. |
 
 ---
 
