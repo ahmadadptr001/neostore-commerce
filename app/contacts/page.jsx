@@ -1,4 +1,3 @@
-import Link from 'daisyui/components/link';
 import { Facebook, Instagram, Youtube } from 'lucide-react';
 import Image from 'next/image';
 
@@ -24,7 +23,7 @@ export default function Contacts() {
             >
               <input
                 type="text"
-                className="input-none"
+                className="input-none w-full"
                 placeholder="Full Name"
               />
             </label>
@@ -34,7 +33,7 @@ export default function Contacts() {
             >
               <input
                 type="text"
-                className="input-none"
+                className="input-none w-full"
                 placeholder="E-mail"
               />
             </label>
@@ -44,7 +43,7 @@ export default function Contacts() {
             >
               <input
                 type="text"
-                className="input-none"
+                className="input-none w-full"
                 placeholder="Message"
               />
             </label>
