@@ -49,7 +49,7 @@ export default function Contacts() {
               />
             </label>
 
-             <button type='submit' className="btn bg-gray-700 hover:bg-gray-500 text-white mt-10">Contact Us</button>
+             <button type='submit' className="btn btn-lg bg-gray-700 hover:bg-gray-500 text-white mt-10">Contact Us</button>
 
           </form>
 
