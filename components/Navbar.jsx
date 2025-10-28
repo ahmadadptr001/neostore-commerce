@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import ActiveLinkSidebar from './ActiveLinkSidebar';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [openRightSidebar, setOpenRightSidebar] = useState(false);
@@ -87,7 +88,8 @@ export default function Navbar() {
         <div className="flex items-center gap-12 font-normal">
           {/* brand name */}
           <Link href="/" className="font-extrabold text-2xl">
-            NEOSTORE
+            <span className='sm:hidden'>NEOSTORE</span>
+            <Image src="/logo.png" width={50} height={50} className='hidden sm:block rounded-full object-cover' alt='logo neostore' />
           </Link>
 
           <ul className="hidden sm:flex">
