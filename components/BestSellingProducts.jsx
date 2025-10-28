@@ -10,7 +10,10 @@ export default function BestSellingProducts() {
 
   useEffect(() => {
     (async () => {
-      const products = await getAllProducts();
+      let products = await getAllProducts();
+      if (products == 'Network Error') {
+        products = [];
+      }
       const bestSellingFilterProducts = bestSelling(products);
       setItmes(bestSellingFilterProducts);
     })();
@@ -65,6 +68,7 @@ export default function BestSellingProducts() {
           isDragging ? 'cursor-grabbing' : 'cursor-grab'
         } md:flex-1`}
       >
+        
         {items &&
           items.map((item, i) => (
             <div
