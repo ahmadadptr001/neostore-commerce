@@ -57,7 +57,7 @@ export default function Navbar() {
           </ul>
 
           {/* untuk sosmed nya */}
-          <ul className="mt-7 flex items-center gap-5">
+          <ul className="mt-7 flex items-center gap-5 px-4">
             <li className="bg-red-500 p-4 rounded-full">
               <a href="" target="_blank" className="text-white">
                 <Youtube className="hover:scale-120" />
