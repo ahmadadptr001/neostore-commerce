@@ -13,7 +13,11 @@ export default function Products() {
 
   useEffect(() => {
     (async () => {
-      const response = await getAllProducts();
+      let response = await getAllProducts();
+      if (response == 'Network Error') {
+        response = []
+      }
+      
       const availableProducts = response.filter(
         (item) => item.rating.count > 0
       );
@@ -24,9 +28,6 @@ export default function Products() {
       const responseFilterCategories = response.filter(
         (item) => item.category.toLowerCase().includes(categoriesChoice.toLowerCase())
       );
-
-      console.log(response)
-      console.log(categoriesChoice.toLowerCase())
 
       if (queryInputSearch) {
         setProducts(
