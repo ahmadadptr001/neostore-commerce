@@ -54,7 +54,7 @@ export default function Products() {
 
   const cardFilters = () => (
     <div className={`p-4 ${openFilters ? 'block' : 'hidden'} md:block`}>
-      <h2 className="font-semibold text-2xl">Filters</h2>
+      <h2 className="font-semibold text-2xl">Filters Product</h2>
       <p className="font-semibold mt-3">Size</p>
       <div className="flex flex-wrap gap-1 mt-2">
         {sizes.map((item, i) => (
@@ -161,7 +161,7 @@ export default function Products() {
         </label>
       </div>
 
-      <div className={`flex flex-col px-5 justify-center md:order-1 md:row-span-2 order-2 row-span-1 ${openFilters ? 'col-span-2' : 'col-span-1'}`}>
+      <div className={`flex flex-col px-5 py-10 md:order-1 md:row-span-2 order-2 row-span-1 ${openFilters ? 'col-span-2' : 'col-span-1'}`}>
         {cardFilters()}
       </div>
 
