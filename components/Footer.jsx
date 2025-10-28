@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="bg-base-200 text-base-content mt-16 border-t border-base-300">
@@ -5,7 +7,7 @@ export default function Footer() {
         {/* Brand Section */}
         <aside>
           <h2 className="text-2xl font-extrabold mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            NeoTstore
+            NEOSTORE
           </h2>
           <p className="text-sm leading-relaxed text-base-content/70">
             Solusi belanja digital masa kini.  
@@ -17,9 +19,9 @@ export default function Footer() {
         <nav>
           <h6 className="footer-title mb-3">Layanan</h6>
           <ul className="space-y-2">
-            <li><a href="#" className="link link-hover">Pengiriman</a></li>
-            <li><a href="#" className="link link-hover">Bantuan</a></li>
-            <li><a href="#" className="link link-hover">Garansi</a></li>
+            <li><Link href="#" className="link link-hover">Pengiriman</Link></li>
+            <li><Link href="#" className="link link-hover">Bantuan</Link></li>
+            <li><Link href="#" className="link link-hover">Garansi</Link></li>
           </ul>
         </nav>
 
@@ -27,9 +29,9 @@ export default function Footer() {
         <nav>
           <h6 className="footer-title mb-3">Perusahaan</h6>
           <ul className="space-y-2">
-            <li><a href="#" className="link link-hover">Tentang Kami</a></li>
-            <li><a href="#" className="link link-hover">Karir</a></li>
-            <li><a href="#" className="link link-hover">Kontak</a></li>
+            <li><Link href="#" className="link link-hover">Tentang Kami</Link></li>
+            <li><Link href="#" className="link link-hover">Karir</Link></li>
+            <li><Link href="/contacts" className="link link-hover">Kontak</Link></li>
           </ul>
         </nav>
 
@@ -37,16 +39,16 @@ export default function Footer() {
         <nav>
           <h6 className="footer-title mb-3">Sosial</h6>
           <ul className="space-y-2">
-            <li><a href="#" className="link link-hover">Instagram</a></li>
-            <li><a href="#" className="link link-hover">Twitter</a></li>
-            <li><a href="#" className="link link-hover">Facebook</a></li>
+            <li><Link href="#" className="link link-hover">Instagram</Link></li>
+            <li><Link href="#" className="link link-hover">Twitter</Link></li>
+            <li><Link href="#" className="link link-hover">Facebook</Link></li>
           </ul>
         </nav>
       </div>
 
       {/* Bottom Section */}
       <div className="border-t border-base-300 py-6 text-center text-sm text-base-content/60">
-        © {new Date().getFullYear()} <span className="font-semibold text-primary">NeoTstore</span>. Semua hak dilindungi.
+        © {new Date().getFullYear()} <span className="font-semibold text-primary">NEOSTORE</span>. Semua hak dilindungi.
       </div>
     </footer>
   );
