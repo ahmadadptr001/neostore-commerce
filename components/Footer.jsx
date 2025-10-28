@@ -27,23 +27,23 @@ export default function Footer() {
         </aside>
 
         {/* Layanan */}
-        <nav> 
+        <nav className='flex flex-col items-center md:items-start'> 
           <h6 className="footer-title mb-4 text-base font-semibold text-base-content/80 uppercase tracking-wide">
             Layanan
           </h6>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="#" className="link link-hover">
+              <Link href="#" className="hover:link link-hover">
                 Pengiriman
               </Link>
             </li>
             <li>
-              <Link href="#" className="link link-hover">
+              <Link href="#" className="hover:link link-hover">
                 Bantuan
               </Link>
             </li>
             <li>
-              <Link href="#" className="link link-hover">
+              <Link href="#" className="hover:link link-hover">
                 Garansi
               </Link>
             </li>
@@ -51,23 +51,23 @@ export default function Footer() {
         </nav>
 
         {/* Perusahaan */}
-        <nav>
+        <nav className='flex flex-col items-center md:items-start'>
           <h6 className="footer-title mb-4 text-base font-semibold text-base-content/80 uppercase tracking-wide">
             Perusahaan
           </h6>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="#" className="link link-hover">
+              <Link href="#" className="hover:link link-hover">
                 Tentang Kami
               </Link>
             </li>
             <li>
-              <Link href="#" className="link link-hover">
+              <Link href="#" className="hover:link link-hover">
                 Karir
               </Link>
             </li>
             <li>
-              <Link href="/contacts" className="link link-hover">
+              <Link href="/contacts" className="hover:link link-hover">
                 Kontak
               </Link>
             </li>
@@ -75,23 +75,23 @@ export default function Footer() {
         </nav>
 
         {/* Sosial Media */}
-        <nav>
+        <nav className='flex flex-col items-center col-span-2 md:col-span-1 md:items-start'>
           <h6 className="footer-title mb-4 text-base font-semibold text-base-content/80 uppercase tracking-wide">
             Sosial Media
           </h6>
           <ul className="flex items-center gap-5 space-y-2 text-sm">
             <li className='p-3 bg-gradient-to-r from-red-400 to-blue-600 rounded-full text-white'>
-              <Link href="#" className="link link-hover">
+              <Link href="#" className="hover:link link-hover">
                 <Instagram />
               </Link>
             </li>
             <li className='p-3 bg-cyan-400 rounded-full text-white'>
-              <Link href="#" className="link link-hover">
+              <Link href="#" className="hover:link link-hover">
                 <Twitter />
               </Link>
             </li>
             <li className='p-3 bg-blue-500 rounded-full text-white'>
-              <Link href="#" className="link link-hover">
+              <Link href="#" className="hover:link link-hover">
                 <Facebook />
               </Link>
             </li>
