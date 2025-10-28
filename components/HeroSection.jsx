@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function HeroSection() {
   return (
-    <section className="bg-[#C1DCDC] rounded-xl mx-auto mt-5 container p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
+    <section className="bg-primary-new rounded-xl mx-auto mt-5 container p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
       {/* Teks Hero */}
       <div className="flex flex-col justify-center space-y-6">
         <h1 className="font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight text-gray-800">
@@ -44,7 +44,7 @@ export default function HeroSection() {
       </div>
 
       {/* Gambar Hero */}
-      <div className="relative w-full h-60 sm:h-80 lg:h-[400px] hidden lg:block">
+      <div className="w-full h-60 sm:h-80 relative lg:h-[400px] lg:block">
         <Image
           src="/hero-image.png"
           alt="NeoTstore hero"
