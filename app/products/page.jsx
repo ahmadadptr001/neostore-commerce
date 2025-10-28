@@ -1,29 +1,55 @@
 'use client';
 import { getAllProducts } from '@/services/products';
-import {
-  Minus,
-  MinusCircle,
-  MinusSquare,
-  Plus,
-  PlusCircle,
-  Search,
-} from 'lucide-react';
+import { MinusCircle, PlusCircle, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function Products() {
+  const [queryInputSearch, setQueryInputSearch] = useState('');
   const [products, setProducts] = useState([]);
+  const [available, setAvailable] = useState(0);
+  const [categoriesChoice, setCategoriesChoice] = useState('');
+  const [notAvailable, setNotAvailable] = useState(0);
   const [openFilters, setOpenFilters] = useState(false);
 
   useEffect(() => {
     (async () => {
       const response = await getAllProducts();
-      setProducts(response);
+      const availableProducts = response.filter(
+        (item) => item.rating.count > 0
+      );
+      const notAvailableProducts = response.filter(
+        (item) => item.rating.count < 0
+      );
+
+      const responseFilterCategories = response.filter(
+        (item) => item.category.toLowerCase().includes(categoriesChoice.toLowerCase())
+      );
+
+      console.log(response)
+      console.log(categoriesChoice.toLowerCase())
+
+      if (queryInputSearch) {
+        setProducts(
+          responseFilterCategories.filter((item) =>
+            item.title
+              .toLowerCase()
+              .includes(queryInputSearch.toLocaleLowerCase())
+          )
+        );
+        return;
+      }
+
+      setAvailable(availableProducts);
+      setNotAvailable(notAvailableProducts);
+      setProducts(responseFilterCategories);
+
+
     })();
-  });
+  }, [queryInputSearch, categoriesChoice]);
 
   const categories = [
     "Men's Clothing",
-    "Woman's Clothing",
+    "Women's Clothing",
     'Electronics',
     'Jewelery',
   ];
@@ -31,7 +57,7 @@ export default function Products() {
   const sizes = ['XS', 'S', 'M', 'L', 'XL', '2X'];
 
   const cardCategories = (item) => (
-    <div className="p-3 border border-gray-300">
+    <div className="p-3 border border-gray-300 hover:scale-105 duration-500 cursor-pointer" onClick={() => setCategoriesChoice(item)}>
       <p>{item}</p>
     </div>
   );
@@ -58,7 +84,7 @@ export default function Products() {
       <p className="font-semibold mt-3">Size</p>
       <div className="flex flex-wrap gap-1 mt-2">
         {sizes.map((item, i) => (
-          <div key={i} className="p-2 border border-gray-400 px-3 ">
+          <div key={i} className="p-2 border border-gray-400 px-3 hover:scale-105 duration-500 cursor-pointer">
             {item}
           </div>
         ))}
@@ -74,11 +100,12 @@ export default function Products() {
               type="radio"
               name="availability"
               id="av-1"
+              onChange={() => setProducts(available)}
               className="h-6 w-6"
             />
             <span>
               Availability {'('}
-              <span className="text-info">450</span>
+              <span className="text-info">{available.length}</span>
               {')'}
             </span>
           </label>
@@ -87,11 +114,12 @@ export default function Products() {
               type="radio"
               name="availability"
               id="av-2"
+              onChange={() => setProducts(notAvailable)}
               className="h-6 w-6"
             />
             <span>
               Out of Stack {'('}
-              <span className="text-error">16</span>
+              <span className="text-error">{notAvailable.length}</span>
               {')'}
             </span>
           </label>
@@ -112,6 +140,7 @@ export default function Products() {
                 <input
                   type="radio"
                   name="categories"
+                  onChange={(e) => setCategoriesChoice(item)}
                   id={`category-${item}`}
                   className="w-7 h-7"
                 />
@@ -149,23 +178,33 @@ export default function Products() {
         <h3 className="font-extrabold text-2xl">PRODUCTS</h3>
         <label
           htmlFor="search-products"
-          className="mt-4 mx-auto w-full md:mx-0 max-w-md rounded-md p-3 bg-gray-300 flex items-center justify-between"
+          className="mt-4 mx-auto w-full md:mx-0 max-w-md rounded-md p-3 bg-gray-200 flex items-center justify-between"
         >
           <Search size={20} />
           <input
             className="input-none w-full text-end"
             type="text"
+            value={queryInputSearch}
+            onChange={(e) => setQueryInputSearch(e.target.value)}
             placeholder="Search"
             id="search-products"
           />
         </label>
       </div>
 
-      <div className={`flex flex-col px-5 py-10 md:order-1 md:row-span-2 order-2 row-span-1 ${openFilters ? 'col-span-2' : 'col-span-1'}`}>
+      <div
+        className={`flex flex-col px-5 py-10 md:order-1 md:row-span-2 order-2 row-span-1 ${
+          openFilters ? 'col-span-2' : 'col-span-1'
+        }`}
+      >
         {cardFilters()}
       </div>
 
-      <div className={`md:order-3 md:col-span-2 order-3 p-3 ${openFilters ? 'col-span-1' : 'col-span-3'} duration-500`}>
+      <div
+        className={`md:order-3 md:col-span-2 order-3 p-3 ${
+          openFilters ? 'col-span-1' : 'col-span-3'
+        } duration-500`}
+      >
         {/* filter kategory */}
         <p
           className="md:hidden py-2 px-2 font-bold text-2xl flex items-center text-gray-600 gap-3 cursor-pointer mb-3"
@@ -181,22 +220,19 @@ export default function Products() {
         </div>
 
         {/* grid products */}
-        <div className={`grid ${openFilters ? 'grid-cols-1' : 'grid-cols-3'} md:grid-cols-3 lg:grid-cols-4 gap-6 text-xs sm:text-sm mt-5 overflow-y-scroll h-150`}>
+        <div
+          className={`grid ${
+            openFilters ? 'grid-cols-1' : 'grid-cols-3'
+          } md:grid-cols-3 lg:grid-cols-4 gap-6 text-xs sm:text-sm mt-5 overflow-y-scroll h-150`}
+        >
           {products.length == 0 && (
-            <>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-              <div className="skeleton w-50 h-50"></div>
-            </>
+            <div className="p-3 col-span-3">
+              <img
+                className="mx-auto"
+                src="https://media.tenor.com/9X3Fc4fequQAAAAi/not-at-all-work.gif"
+                alt="gif tidak ditemukan"
+              />
+            </div>
           )}
           {products &&
             products.map((item, i) => <div key={i}>{cardProducts(item)}</div>)}
