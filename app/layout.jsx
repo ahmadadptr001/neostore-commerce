@@ -3,6 +3,9 @@ import './globals.css';
 export const metadata = {
   title: 'NeoStore | Your Next-Gen Shopping Experience',
   description: 'Belanja modern dengan gaya masa depan.',
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 export default function RootLayouGlobal({ children }) {
