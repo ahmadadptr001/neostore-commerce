@@ -81,7 +81,7 @@ export default function Footer() {
           </h6>
           <ul className="flex items-center gap-5 space-y-2 text-sm">
             <li className='p-3 bg-gradient-to-r from-red-400 to-blue-600 rounded-full text-white'>
-              <Link href="#" className="link p-4 link-hover">
+              <Link href="#" className="link link-hover">
                 <Instagram />
               </Link>
             </li>
