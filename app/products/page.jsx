@@ -1,6 +1,12 @@
 'use client';
 import { getAllProducts } from '@/services/products';
-import { MinusCircle, PlusCircle, Search } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  MinusCircle,
+  PlusCircle,
+  Search,
+} from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function Products() {
@@ -15,9 +21,9 @@ export default function Products() {
     (async () => {
       let response = await getAllProducts();
       if (response == 'Network Error') {
-        response = []
+        response = [];
       }
-      
+
       const availableProducts = response.filter(
         (item) => item.rating.count > 0
       );
@@ -25,8 +31,8 @@ export default function Products() {
         (item) => item.rating.count < 0
       );
 
-      const responseFilterCategories = response.filter(
-        (item) => item.category.toLowerCase().includes(categoriesChoice.toLowerCase())
+      const responseFilterCategories = response.filter((item) =>
+        item.category.toLowerCase().includes(categoriesChoice.toLowerCase())
       );
 
       if (queryInputSearch) {
@@ -43,8 +49,6 @@ export default function Products() {
       setAvailable(availableProducts);
       setNotAvailable(notAvailableProducts);
       setProducts(responseFilterCategories);
-
-
     })();
   }, [queryInputSearch, categoriesChoice]);
 
@@ -58,7 +62,10 @@ export default function Products() {
   const sizes = ['XS', 'S', 'M', 'L', 'XL', '2X'];
 
   const cardCategories = (item) => (
-    <div className="p-3 border border-gray-300 hover:scale-105 duration-500 cursor-pointer" onClick={() => setCategoriesChoice(item)}>
+    <div
+      className="p-3 hover:bg-gray-300 border border-gray-300 hover:scale-105 duration-500 cursor-pointer"
+      onClick={() => setCategoriesChoice(item)}
+    >
       <p>{item}</p>
     </div>
   );
@@ -85,7 +92,10 @@ export default function Products() {
       <p className="font-semibold mt-3">Size</p>
       <div className="flex flex-wrap gap-1 mt-2">
         {sizes.map((item, i) => (
-          <div key={i} className="p-2 border border-gray-400 px-3 hover:scale-105 duration-500 cursor-pointer">
+          <div
+            key={i}
+            className="p-2 border border-gray-400 px-3 hover:scale-105 duration-500 cursor-pointer"
+          >
             {item}
           </div>
         ))}
@@ -212,7 +222,7 @@ export default function Products() {
           onClick={() => setOpenFilters(!openFilters)}
         >
           Filters
-          {openFilters ? <PlusCircle size={18} /> : <MinusCircle size={18} />}
+          {openFilters ? <ArrowLeft size={18} /> : <ArrowRight size={18} />}
         </p>
         <div className="flex flex-wrap items-center gap-3">
           {categories.map((item, i) => (
