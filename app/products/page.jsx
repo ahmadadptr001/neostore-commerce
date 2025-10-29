@@ -63,7 +63,7 @@ export default function Products() {
 
   const cardCategories = (item) => (
     <div
-      className="p-3 hover:bg-gray-300 border border-gray-300 hover:scale-105 duration-500 cursor-pointer"
+      className="p-3 hover:bg-gray-300 select-none border border-gray-300 hover:scale-105 duration-500 cursor-pointer"
       onClick={() => setCategoriesChoice(item)}
     >
       <p>{item}</p>
