@@ -3,7 +3,7 @@ const nextConfig = {
   /* config options here */
   reactCompiler: true,
   images: {
-    domains: ['fakestoreapi.com']
+    domains: ['cdn.dummyjson.com']
   }
 };
 
