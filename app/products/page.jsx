@@ -6,10 +6,14 @@ import {
   MinusCircle,
   PlusCircle,
   Search,
+  Star,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function Products() {
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [rating, setRating] = useState(0);
   const [queryInputSearch, setQueryInputSearch] = useState('');
   const [products, setProducts] = useState([]);
   const [available, setAvailable] = useState(0);
@@ -46,11 +50,27 @@ export default function Products() {
         return;
       }
 
+      if (rating !== 0) {
+        const filterProductsRating = response.filter(
+          (item) => Math.floor(item.rating.rate) === rating
+        );
+        setProducts(filterProductsRating);
+        return;
+      }
+
+      if (minPrice !== 0 || maxPrice !== 0) {
+        const filterRangePriceProducts = response.filter(
+          (item) => item.price >= minPrice && item.price <= maxPrice
+        );
+        setProducts(filterRangePriceProducts);
+        return;
+      }
+
       setAvailable(availableProducts);
       setNotAvailable(notAvailableProducts);
       setProducts(responseFilterCategories);
     })();
-  }, [queryInputSearch, categoriesChoice]);
+  }, [queryInputSearch, categoriesChoice, rating, minPrice, maxPrice]);
 
   const categories = [
     "Men's Clothing",
@@ -63,7 +83,7 @@ export default function Products() {
 
   const cardCategories = (item) => (
     <div
-      className="p-3 hover:bg-gray-300 select-none border border-gray-300 hover:scale-105 duration-500 cursor-pointer"
+      className="p-3 hover:bg-gray-300 select-none active:bg-gray-300 border border-gray-300 hover:scale-105 duration-500 cursor-pointer"
       onClick={() => setCategoriesChoice(item)}
     >
       <p>{item}</p>
@@ -81,7 +101,12 @@ export default function Products() {
       <p className="text-gray-500 mt-3">{item.category}</p>
       <div className="mt-1 flex flex-col">
         <h3 className="font-[550] text-md line-clamp-1">{item.title}</h3>
-        <p className="font-bold text-error">$ {item.price}</p>
+        <div className="flex items-center flex-wrap justify-between px-2">
+          <p className="font-bold text-error">$ {item.price}</p>
+          <p className="font-bold text-warning flex items-center gap-1">
+            <Star size={10} /> {item.rating.rate}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -166,7 +191,74 @@ export default function Products() {
         <input type="radio" name="my-accordion-2" />
         <div className="collapse-title font-semibold p-1">Price Range</div>
         <div className="collapse-content mt-3 p-1">
-          <p className="pb-4">🙌 sabar fitur belum tersedia</p>
+          <div className="w-full max-w-xs p-6 bg-base-100 border border-base-300 rounded-2xl shadow-sm">
+            <h2 className="text-xl font-semibold text-center mb-4">
+              Price Range
+            </h2>
+
+            <div className="flex items-center justify-between gap-6 mb-4">
+              <div className="flex flex-col items-start w-full">
+                <label className="text-sm text-base-content/70 mb-1">Min</label>
+                <div className="relative w-full">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-base-content/70">
+                    $
+                  </span>
+                  <input
+                    type="number"
+                    min="0"
+                    max={maxPrice}
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(Number(e.target.value))}
+                    className="input input-bordered input-sm w-full pl-6"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col items-start w-full">
+                <label className="text-sm text-base-content/70 mb-1">Max</label>
+                <div className="relative w-full">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-base-content/70">
+                    $
+                  </span>
+                  <input
+                    type="number"
+                    min={minPrice}
+                    max="1000"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(Number(e.target.value))}
+                    className="input input-bordered input-sm w-full pl-6"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                step="10"
+                value={minPrice}
+                onChange={(e) => setMinPrice(Number(e.target.value))}
+                className="range range-sm accent-primary"
+              />
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                step="10"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(Number(e.target.value))}
+                className="range range-sm accent-primary"
+              />
+            </div>
+
+            <div className="text-center mt-5 text-base-content/80">
+              <span className="font-medium">${minPrice.toLocaleString()}</span>
+              <span className="mx-2 text-base-content/50">—</span>
+              <span className="font-medium">${maxPrice.toLocaleString()}</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -174,7 +266,43 @@ export default function Products() {
         <input type="radio" name="my-accordion-2" />
         <div className="collapse-title font-semibold p-1">Ratings</div>
         <div className="collapse-content mt-3 p-1">
-          <p className="pb-4">🙌 sabar fitur belum tersedia</p>
+          <div className="rating">
+            <input
+              type="radio"
+              name="rating-2"
+              className="mask mask-star-2 bg-orange-400"
+              aria-label="1 star"
+              onChange={() => setRating(1)}
+            />
+            <input
+              type="radio"
+              name="rating-2"
+              className="mask mask-star-2 bg-orange-400"
+              aria-label="2 star"
+              onChange={() => setRating(2)}
+            />
+            <input
+              type="radio"
+              name="rating-2"
+              className="mask mask-star-2 bg-orange-400"
+              aria-label="3 star"
+              onChange={() => setRating(3)}
+            />
+            <input
+              type="radio"
+              name="rating-2"
+              className="mask mask-star-2 bg-orange-400"
+              aria-label="4 star"
+              onChange={() => setRating(4)}
+            />
+            <input
+              type="radio"
+              name="rating-2"
+              className="mask mask-star-2 bg-orange-400"
+              aria-label="5 star"
+              onChange={() => setRating(5)}
+            />
+          </div>
         </div>
       </div>
     </div>
