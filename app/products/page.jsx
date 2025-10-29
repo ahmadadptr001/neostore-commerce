@@ -204,7 +204,7 @@ export default function Products() {
       </div>
 
       <div
-        className={`flex flex-col px-5 py-10 md:order-1 md:row-span-2 order-2 row-span-1 ${
+        className={`flex flex-col px-5 py-0 md:py-10 md:order-1 md:row-span-2 order-2 row-span-1 ${
           openFilters ? 'col-span-2' : 'col-span-1'
         }`}
       >
