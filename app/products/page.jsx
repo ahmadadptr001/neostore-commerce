@@ -1,5 +1,6 @@
 'use client';
 import { getAllProducts } from '@/services/products';
+import { getAllCategoryName } from '@/utils/products';
 import {
   ArrowLeft,
   ArrowRight,
@@ -20,6 +21,7 @@ export default function Products() {
   const [categoriesChoice, setCategoriesChoice] = useState('');
   const [notAvailable, setNotAvailable] = useState(0);
   const [openFilters, setOpenFilters] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -28,11 +30,15 @@ export default function Products() {
         response = [];
       }
 
+      response = response.products;
+      let allCategory = getAllCategoryName(response);
+      setCategories(allCategory);
+
       const availableProducts = response.filter(
-        (item) => item.rating.count > 0
+        (item) => item.stock > 0
       );
       const notAvailableProducts = response.filter(
-        (item) => item.rating.count < 0
+        (item) => item.stock <= 0
       );
 
       const responseFilterCategories = response.filter((item) =>
@@ -52,7 +58,7 @@ export default function Products() {
 
       if (rating !== 0) {
         const filterProductsRating = response.filter(
-          (item) => Math.floor(item.rating.rate) === rating
+          (item) => Math.floor(item.rating) === rating
         );
         setProducts(filterProductsRating);
         return;
@@ -72,13 +78,6 @@ export default function Products() {
     })();
   }, [queryInputSearch, categoriesChoice, rating, minPrice, maxPrice]);
 
-  const categories = [
-    "Men's Clothing",
-    "Women's Clothing",
-    'Electronics',
-    'Jewelery',
-  ];
-
   const sizes = ['XS', 'S', 'M', 'L', 'XL', '2X'];
 
   const cardCategories = (item) => (
@@ -94,7 +93,7 @@ export default function Products() {
     <div>
       <img
         className="object-contain h-50 w-50 mx-auto"
-        src={item.image}
+        src={item.images[0]}
         alt={item.title}
         loading="lazy"
       />
@@ -104,7 +103,7 @@ export default function Products() {
         <div className="flex items-center flex-wrap justify-between px-2">
           <p className="font-bold text-error">$ {item.price}</p>
           <p className="font-bold text-warning flex items-center gap-1">
-            <Star size={10} /> {item.rating.rate}
+            <Star size={10} /> {item.rating}
           </p>
         </div>
       </div>
@@ -167,7 +166,7 @@ export default function Products() {
         <div className="collapse-title font-semibold p-1">Category</div>
         <div className="collapse-content mt-3 p-1">
           <div className="pb-4 flex flex-col gap-1">
-            {categories.map((item, i) => (
+            {categories && categories.map((item, i) => (
               <label
                 key={i}
                 htmlFor={`category-${item}`}
@@ -353,7 +352,7 @@ export default function Products() {
           {openFilters ? <ArrowLeft size={18} /> : <ArrowRight size={18} />}
         </p>
         <div className="flex flex-wrap items-center gap-3">
-          {categories.map((item, i) => (
+          {categories && categories.map((item, i) => (
             <div key={i}>{cardCategories(item)}</div>
           ))}
         </div>
