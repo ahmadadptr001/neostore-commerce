@@ -458,10 +458,10 @@ export default function DetailProduct() {
                         </div>
                       </div>
 
-                      <div>
+                      <div className="mt-5 sm:mt-0">
                         <h3 className="flex-set font-semibold gap-2">
                           <CircleX className="fill-error" />
-                          <span>What can be returned</span>
+                          <span>What cannot be returned</span>
                         </h3>
 
                         <div className="mt-2 flex flex-col gap-3">
@@ -550,7 +550,7 @@ export default function DetailProduct() {
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path d="M24 29H0V0H24V29Z" stroke="#E5E7EB" />
-                          <g clip-path="url(#clip0_10_1300)">
+                          <g clipPath="url(#clip0_10_1300)">
                             <path
                               d="M3.68448 2.23445C3.23917 1.88758 2.60636 1.92976 2.20323 2.3282L0.328233 4.2032C-0.0702049 4.60164 -0.112392 5.23445 0.229795 5.68445L3.9798 10.5595C4.19073 10.836 4.52355 11.0001 4.87042 11.0001H7.40636L12.5157 16.1095C11.8267 17.4688 12.047 19.1751 13.186 20.3095L18.436 25.5595C19.022 26.1454 19.9735 26.1454 20.5595 25.5595L23.5595 22.5595C24.1454 21.9735 24.1454 21.0219 23.5595 20.436L18.3095 15.186C17.1751 14.0516 15.4689 13.8266 14.1095 14.5157L9.00011 9.40633V6.87508C9.00011 6.52351 8.83605 6.19539 8.55948 5.98445L3.68448 2.23445ZM0.93292 20.5673C0.337608 21.1626 0.000107637 21.9735 0.000107637 22.8173C0.000107637 24.5751 1.42511 26.0001 3.18292 26.0001C4.02667 26.0001 4.83761 25.6626 5.43292 25.0673L10.9548 19.5454C10.5892 18.5657 10.5329 17.5016 10.786 16.4938L7.89386 13.6016L0.93292 20.5673ZM24.0001 8.75008C24.0001 8.25789 23.9485 7.77976 23.8501 7.32039C23.7376 6.79539 23.0954 6.65945 22.7157 7.03914L19.7204 10.0345C19.5798 10.1751 19.3876 10.2548 19.1907 10.2548H16.5001C16.0876 10.2548 15.7501 9.91726 15.7501 9.50476V6.80945C15.7501 6.61258 15.8298 6.42039 15.9704 6.27976L18.9657 3.28445C19.3454 2.90476 19.2095 2.26258 18.6845 2.15008C18.2204 2.05164 17.7423 2.00008 17.2501 2.00008C13.5235 2.00008 10.5001 5.02351 10.5001 8.75008V8.78758L14.4985 12.786C16.186 12.3595 18.0517 12.8094 19.3735 14.1313L20.1095 14.8673C22.4064 13.7891 24.0001 11.4548 24.0001 8.75008ZM2.62511 22.2501C2.62511 21.9517 2.74363 21.6656 2.95461 21.4546C3.16559 21.2436 3.45174 21.1251 3.75011 21.1251C4.04848 21.1251 4.33462 21.2436 4.5456 21.4546C4.75658 21.6656 4.87511 21.9517 4.87511 22.2501C4.87511 22.5484 4.75658 22.8346 4.5456 23.0456C4.33462 23.2565 4.04848 23.3751 3.75011 23.3751C3.45174 23.3751 3.16559 23.2565 2.95461 23.0456C2.74363 22.8346 2.62511 22.5484 2.62511 22.2501Z"
                               fill="#4B5563"
@@ -596,36 +596,49 @@ export default function DetailProduct() {
                         </span>
                       </div>
                     </div>
-                    <div className="mt-7 rounded-lg bg-secondary flex flex-col gap-2 items-center">
+                    <div className="mt-7 rounded-lg bg-secondary flex flex-col gap-2 items-center p-3">
                       <h2 className="text-2xl font-bold text-white">
                         Need Help?
                       </h2>
-                      <span className="text-gray-300">
+                      <span className="text-gray-300 text-center">
                         Our customer service team is here to assist you
                       </span>
-                      <div className="flex flex-wrap gap-3 items-center">
-                        <div className="flex flex-col gap-1 text-center text-white mt-4 p-4">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center mt-4">
+                        <div className="flex flex-col gap-1 text-center text-white  p-4">
                           <span className="bg-gray-100/20 p-3 rounded-full w-fit mx-auto">
                             <Phone className="fill-white stroke-0" size={20} />
                           </span>
-                          <small className='text-gray-300 mt-1'>Call Us</small>
-                          <span className="text-semibold text-lg"> +62 823-2126-1350</span>
+                          <small className="text-gray-300 mt-1">Call Us</small>
+                          <span className="text-semibold text-lg">
+                            {' '}
+                            +62 823-2126-1350
+                          </span>
                         </div>
-                        <div className="flex flex-col gap-1 text-center text-white mt-4 p-4">
+                        <div className="flex flex-col gap-1 text-center text-white  p-4">
                           <span className="bg-gray-100/20 p-3 rounded-full w-fit mx-auto">
                             <Mail className="" size={20} />
                           </span>
-                          <small className='text-gray-300 mt-1'>Email Us</small>
-                          <span className="text-semibold text-lg"> ahmadadptr@gmail.com</span>
-                        </div>
-                        <div className="flex flex-col gap-1 text-center text-white mt-4 p-4">
-                          <span className="bg-gray-100/20 p-3 rounded-full w-fit mx-auto">
-                            <MessagesSquare className="fill-white stroke-0" size={20} />
+                          <small className="text-gray-300 mt-1">Email Us</small>
+                          <span className="text-semibold text-lg">
+                            {' '}
+                            ahmadadptr@gmail.com
                           </span>
-                          <small className='text-gray-300 mt-1'>Live Chat</small>
-                          <span className="text-semibold text-lg"> 1-800-FURNI-CRAFT</span>
                         </div>
-
+                        <div className="flex flex-col gap-1 text-center text-white p-4">
+                          <span className="bg-gray-100/20 p-3 rounded-full w-fit mx-auto">
+                            <MessagesSquare
+                              className="fill-white stroke-0"
+                              size={20}
+                            />
+                          </span>
+                          <small className="text-gray-300 mt-1">
+                            Live Chat
+                          </small>
+                          <span className="text-semibold text-lg">
+                            {' '}
+                            1-800-FURNI-CRAFT
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -676,13 +689,65 @@ export default function DetailProduct() {
 
               {activeTab === 'spesifications' && (
                 <div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Shipping Information
-                  </h3>
-                  <p className="text-gray-600">
-                    Free shipping for orders above $100. Estimated delivery: 3–5
-                    business days.
+                  <div className="font-semibold">Product Specifications</div>
+                  <div className="overflow-x-auto w-full my-4">
+                    <table className="table w-full border border-base-300">
+                      <tbody>
+                        <tr className="hover">
+                          <th className="bg-base-200 w-1/3">Brand</th>
+                          <td>{product.brand}</td>
+                        </tr>
+                        <tr className="hover">
+                          <th className="bg-base-200">Category</th>
+                          <td>{product.category}</td>
+                        </tr>
+                        <tr className="hover">
+                          <th className="bg-base-200">SKU</th>
+                          <td>{product.sku}</td>
+                        </tr>
+                        <tr className="hover">
+                          <th className="bg-base-200">Dimensions</th>
+                          <td>
+                            <div className="flex flex-col">
+                              <span>Width: {product.dimensions.width} cm</span>
+                              <span>
+                                Height: {product.dimensions.height} cm
+                              </span>
+                              <span>Depth: {product.dimensions.depth} cm</span>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr className="hover">
+                          <th className="bg-base-200">Weight</th>
+                          <td>{product.weight} kg</td>
+                        </tr>
+                        <tr className="hover">
+                          <th className="bg-base-200">Min. Order</th>
+                          <td>{product.minimumOrderQuantity} units</td>
+                        </tr>
+                        <tr className="hover">
+                          <th className="bg-base-200">Warranty</th>
+                          <td>{product.warrantyInformation}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <p className="font-semibold mt-6">Description</p>
+                  <p className="text-gray-500 mt-2 text-sm">
+                    {product.description}
                   </p>
+
+                  <p className="font-semibold mt-3 mb-1">Tags</p>
+                  <div className="flex items-center gap-1 flex-wrap">
+                    {product.tags.map((item, i) => (
+                      <div key={i}>
+                        <span className="badge bg-secondary/20 text-gray-600">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
