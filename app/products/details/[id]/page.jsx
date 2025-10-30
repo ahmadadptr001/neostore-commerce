@@ -262,17 +262,6 @@ export default function DetailProduct() {
               </a>
               <a
                 className={`tab tab-bordered ${
-                  activeTab === 'specifications'
-                    ? 'tab-active text-primary font-semibold'
-                    : ''
-                }`}
-                onClick={() => setActiveTab('specifications')}
-              >
-                Specifications
-              </a>
-
-              <a
-                className={`tab tab-bordered ${
                   activeTab === 'shipping'
                     ? 'tab-active text-primary font-semibold'
                     : ''
@@ -281,11 +270,22 @@ export default function DetailProduct() {
               >
                 Shipping
               </a>
+
+              <a
+                className={`tab tab-bordered ${
+                  activeTab === 'spesifications'
+                    ? 'tab-active text-primary font-semibold'
+                    : ''
+                }`}
+                onClick={() => setActiveTab('spesifications')}
+              >
+                Spesifications
+              </a>
             </div>
 
             {/* Tab Content */}
             <div className="p-5 border border-base-300 rounded-b-box">
-              {activeTab === 'specifications' && (
+              {activeTab === 'shipping' && (
                 <div>
                   <h3 className="text-lg font-semibold mb-1">
                     Shipping & Returns
@@ -674,7 +674,7 @@ export default function DetailProduct() {
                 </>
               )}
 
-              {activeTab === 'shipping' && (
+              {activeTab === 'spesifications' && (
                 <div>
                   <h3 className="text-lg font-semibold mb-2">
                     Shipping Information
