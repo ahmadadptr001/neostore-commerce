@@ -43,7 +43,6 @@ export default function BestSellingProducts() {
 
   return (
     <section className="container mx-auto px-4 py-8 flex flex-col md:flex-row gap-6 md:gap-10 mt-10">
-      {/* Left Section (Text & Button) */}
       <div className="flex-1 md:max-w-[300px] text-right sm:text-left p-4 max-w-md ms-auto">
         <h2 className="text-2xl md:text-3xl font-bold">
           Best Selling Products
@@ -57,14 +56,13 @@ export default function BestSellingProducts() {
         </button>
       </div>
 
-      {/* Right Section (Scrollable Gallery) */}
       <div
         ref={galleryRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className={`flex gap-4 overflow-x-auto scrollbar-hide select-none ${
+        className={`px-5 scrollbar-hide flex gap-4 overflow-x-auto scrollbar-hide select-none ${
           isDragging ? 'cursor-grabbing' : 'cursor-grab'
         } md:flex-1`}
       >
@@ -73,10 +71,10 @@ export default function BestSellingProducts() {
           items.map((item, i) => (
             <div
               key={i}
-              className="block min-w-[180px] sm:min-w-[220px] md:min-w-[250px]"
+              className="block min-w-[150px] sm:min-w-[220px] md:min-w-[250px]"
             >
               {/* Image Card */}
-              <div className="relative h-56 sm:h-60 md:h-64 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100 shadow-sm hover:shadow-md transition">
+              <div className="relative h-50 sm:h-60 md:h-64 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100 shadow-sm hover:shadow-md transition">
                 <Image
                   src={item.images[0]}
                   alt={`gambar ke-${i}`}
