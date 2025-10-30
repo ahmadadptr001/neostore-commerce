@@ -9,9 +9,11 @@ import {
   Search,
   Star,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Products() {
+  const router = useRouter();
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [rating, setRating] = useState(0);
@@ -34,12 +36,8 @@ export default function Products() {
       let allCategory = getAllCategoryName(response);
       setCategories(allCategory);
 
-      const availableProducts = response.filter(
-        (item) => item.stock > 0
-      );
-      const notAvailableProducts = response.filter(
-        (item) => item.stock <= 0
-      );
+      const availableProducts = response.filter((item) => item.stock > 0);
+      const notAvailableProducts = response.filter((item) => item.stock <= 0);
 
       const responseFilterCategories = response.filter((item) =>
         item.category.toLowerCase().includes(categoriesChoice.toLowerCase())
@@ -90,7 +88,10 @@ export default function Products() {
   );
 
   const cardProducts = (item) => (
-    <div>
+    <div
+      className="cursor-pointer"
+      onClick={() => router.push('/products/details/' + item.id)}
+    >
       <img
         className="object-contain h-50 w-50 mx-auto"
         src={item.images[0]}
@@ -100,7 +101,7 @@ export default function Products() {
       <p className="text-gray-500 mt-3">{item.category}</p>
       <div className="mt-1 flex flex-col">
         <h3 className="font-[550] text-md line-clamp-1">{item.title}</h3>
-        <div className="flex items-center flex-wrap justify-between px-2">
+        <div className="flex items-center flex-wrap justify-between px-2 mt-1">
           <p className="font-bold text-error">$ {item.price}</p>
           <p className="font-bold text-warning flex items-center gap-1">
             <Star size={10} /> {item.rating}
@@ -166,22 +167,23 @@ export default function Products() {
         <div className="collapse-title font-semibold p-1">Category</div>
         <div className="collapse-content mt-3 p-1">
           <div className="pb-4 flex flex-col gap-1">
-            {categories && categories.map((item, i) => (
-              <label
-                key={i}
-                htmlFor={`category-${item}`}
-                className="flex items-center gap-2"
-              >
-                <input
-                  type="radio"
-                  name="categories"
-                  onChange={(e) => setCategoriesChoice(item)}
-                  id={`category-${item}`}
-                  className="w-7 h-7"
-                />
-                <p className="line-clamp-1 text-gray-500">{item}</p>
-              </label>
-            ))}
+            {categories &&
+              categories.map((item, i) => (
+                <label
+                  key={i}
+                  htmlFor={`category-${item}`}
+                  className="flex items-center gap-2"
+                >
+                  <input
+                    type="radio"
+                    name="categories"
+                    onChange={(e) => setCategoriesChoice(item)}
+                    id={`category-${item}`}
+                    className="w-7 h-7"
+                  />
+                  <p className="line-clamp-1 text-gray-500">{item}</p>
+                </label>
+              ))}
           </div>
         </div>
       </div>
@@ -352,16 +354,17 @@ export default function Products() {
           {openFilters ? <ArrowLeft size={18} /> : <ArrowRight size={18} />}
         </p>
         <div className="flex flex-wrap items-center gap-3">
-          {categories && categories.map((item, i) => (
-            <div key={i}>{cardCategories(item)}</div>
-          ))}
+          {categories &&
+            categories.map((item, i) => (
+              <div key={i}>{cardCategories(item)}</div>
+            ))}
         </div>
 
         {/* grid products */}
         <div
           className={`grid ${
             openFilters ? 'grid-cols-1' : 'grid-cols-3'
-          } md:grid-cols-3 lg:grid-cols-4 gap-6 text-xs sm:text-sm mt-5 overflow-y-scroll h-150`}
+          } md:grid-cols-3 lg:grid-cols-4 gap-6 text-xs sm:text-sm mt-5 overflow-y-scroll h-150 p-5`}
         >
           {products.length == 0 && (
             <div className="p-3 col-span-3">

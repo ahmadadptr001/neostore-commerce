@@ -68,7 +68,7 @@ export default function Contacts() {
 
             <button
               type="submit"
-              className="btn btn-lg bg-gray-700 hover:bg-gray-500 text-white mt-10"
+              className="btn btn-lg bg-gray-700 hover:bg-gray-500 text-white mt-7"
             >
               Contact Us
             </button>
