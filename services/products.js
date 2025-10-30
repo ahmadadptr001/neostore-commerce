@@ -11,7 +11,7 @@ export const getAllProducts = async () => {
 };
 
 export const getSingleProducts = async (id) => {
-  const url = 'https://dummyjson.com/products' + id;
+  const url = 'https://dummyjson.com/products/' + id;
   try {
     const response = await axios.get(url);
     return response.data;
