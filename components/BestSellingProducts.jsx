@@ -78,7 +78,7 @@ export default function BestSellingProducts() {
               {/* Image Card */}
               <div className="relative h-56 sm:h-60 md:h-64 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100 shadow-sm hover:shadow-md transition">
                 <Image
-                  src={item.image}
+                  src={item.images[0]}
                   alt={`gambar ke-${i}`}
                   fill
                   className="object-cover"
