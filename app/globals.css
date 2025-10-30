@@ -59,3 +59,8 @@ body {
   scrollbar-width: none;     /* Firefox */
 }
 
+.flex-set {
+  display: flex;
+  align-items: center;
+}
+
