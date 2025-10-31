@@ -330,10 +330,6 @@ export default function Products() {
   return (
     <section className="overflow-x-hidden grid grid-cols-3 min-h-[80vh]">
       <div className=" md:col-span-2 md:order-2 order-1 col-span-3 md:text-start text-center p-4 flex flex-col justify-center">
-        <p className="font-semibold text-gray-500">
-          Home / <span className="text-gray-600">Products</span>
-        </p>
-        <h3 className="font-extrabold text-2xl">PRODUCTS</h3>
         <label
           htmlFor="search-products"
           className="mt-4 mx-auto w-full md:mx-0 max-w-md rounded-md p-3 bg-gray-200 flex items-center justify-between"
