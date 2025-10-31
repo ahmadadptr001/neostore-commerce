@@ -1,5 +1,9 @@
 'use client';
-import { getAllProducts } from '@/services/products';
+import {
+  getAllCategories,
+  getAllProducts,
+  getProductByCategory,
+} from '@/services/products';
 import { getAllCategoryName } from '@/utils/products';
 import {
   ArrowLeft,
@@ -24,9 +28,13 @@ export default function Products() {
   const [notAvailable, setNotAvailable] = useState(0);
   const [openFilters, setOpenFilters] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [categoriesFilter, setCategoriesFilter] = useState([]);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
+
       let response = await getAllProducts();
       if (response == 'Network Error') {
         response = [];
@@ -34,23 +42,29 @@ export default function Products() {
 
       response = response.products;
       let allCategory = getAllCategoryName(response);
+      let allCategoryFilter = await getAllCategories();
+      setCategoriesFilter(allCategoryFilter);
       setCategories(allCategory);
 
       const availableProducts = response.filter((item) => item.stock > 0);
       const notAvailableProducts = response.filter((item) => item.stock <= 0);
 
-      const responseFilterCategories = response.filter((item) =>
-        item.category.toLowerCase().includes(categoriesChoice.toLowerCase())
-      );
+      if (categoriesChoice) {
+        const responseByCategory = await getProductByCategory(categoriesChoice);
+        setProducts(responseByCategory.products);
+        setLoading(false);
+        return;
+      }
 
       if (queryInputSearch) {
         setProducts(
-          responseFilterCategories.filter((item) =>
+          response.filter((item) =>
             item.title
               .toLowerCase()
               .includes(queryInputSearch.toLocaleLowerCase())
           )
         );
+        setLoading(false);
         return;
       }
 
@@ -59,6 +73,7 @@ export default function Products() {
           (item) => Math.floor(item.rating) === rating
         );
         setProducts(filterProductsRating);
+        setLoading(false);
         return;
       }
 
@@ -67,12 +82,15 @@ export default function Products() {
           (item) => item.price >= minPrice && item.price <= maxPrice
         );
         setProducts(filterRangePriceProducts);
+        setLoading(false);
         return;
       }
 
       setAvailable(availableProducts);
       setNotAvailable(notAvailableProducts);
-      setProducts(responseFilterCategories);
+      setProducts(response);
+
+      setLoading(false);
     })();
   }, [queryInputSearch, categoriesChoice, rating, minPrice, maxPrice]);
 
@@ -167,8 +185,8 @@ export default function Products() {
         <div className="collapse-title font-semibold p-1">Category</div>
         <div className="collapse-content mt-3 p-1">
           <div className="pb-4 flex flex-col gap-1">
-            {categories &&
-              categories.map((item, i) => (
+            {categoriesFilter &&
+              categoriesFilter.map((item, i) => (
                 <label
                   key={i}
                   htmlFor={`category-${item}`}
@@ -366,17 +384,34 @@ export default function Products() {
             openFilters ? 'grid-cols-1' : 'grid-cols-3'
           } md:grid-cols-3 lg:grid-cols-4 gap-6 text-xs sm:text-sm mt-5 overflow-y-scroll h-150 p-5`}
         >
-          {products.length == 0 && (
-            <div className="p-3 col-span-3">
-              <img
-                className="mx-auto"
-                src="https://media.tenor.com/9X3Fc4fequQAAAAi/not-at-all-work.gif"
-                alt="gif tidak ditemukan"
-              />
-            </div>
+          {loading ? (
+            <>
+              <div className="skeleton h-60"></div>
+              <div className="skeleton h-60"></div>
+              <div className="skeleton h-60"></div>
+              <div className="skeleton h-60"></div>
+              <div className="skeleton h-60"></div>
+              <div className="skeleton h-60"></div>
+              <div className="skeleton h-60"></div>
+              <div className="skeleton h-60"></div>
+            </>
+          ) : (
+            <>
+              {products.length == 0 && (
+                <div className="p-3 col-span-3">
+                  <img
+                    className="mx-auto"
+                    src="https://media.tenor.com/9X3Fc4fequQAAAAi/not-at-all-work.gif"
+                    alt="gif tidak ditemukan"
+                  />
+                </div>
+              )}
+              {products &&
+                products.map((item, i) => (
+                  <div key={i}>{cardProducts(item)}</div>
+                ))}
+            </>
           )}
-          {products &&
-            products.map((item, i) => <div key={i}>{cardProducts(item)}</div>)}
         </div>
       </div>
     </section>
