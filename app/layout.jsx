@@ -4,7 +4,17 @@ export const metadata = {
   title: 'NeoStore | Your Next-Gen Shopping Experience',
   description: 'Belanja modern dengan gaya masa depan.',
   icons: {
-    icon: '/logo.png',
+    icon: [
+      { url: '/logo.png' },
+      { url: '/logo.png', type: 'image/png', sizes: '32x32' },
+    ],
+    apple: [
+      {
+        url: '/logo.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
   },
 };
 
