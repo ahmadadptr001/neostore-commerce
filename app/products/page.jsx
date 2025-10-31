@@ -386,14 +386,14 @@ export default function Products() {
         >
           {loading ? (
             <>
-              <div className="skeleton h-60"></div>
-              <div className="skeleton h-60"></div>
-              <div className="skeleton h-60"></div>
-              <div className="skeleton h-60"></div>
-              <div className="skeleton h-60"></div>
-              <div className="skeleton h-60"></div>
-              <div className="skeleton h-60"></div>
-              <div className="skeleton h-60"></div>
+              <div className="skeleton h-40 sm:h-40"></div>
+              <div className="skeleton h-40 sm:h-60"></div>
+              <div className="skeleton h-40 sm:h-60"></div>
+              <div className="skeleton h-40 sm:h-60"></div>
+              <div className="skeleton h-40 sm:h-60"></div>
+              <div className="skeleton h-40 sm:h-60"></div>
+              <div className="skeleton h-40 sm:h-60"></div>
+              <div className="skeleton h-40 sm:h-60"></div>
             </>
           ) : (
             <>
