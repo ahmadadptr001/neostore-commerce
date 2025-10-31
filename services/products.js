@@ -29,3 +29,13 @@ export const getAllCategories = async () => {
     return err.message;
   }
 }
+
+export const getProductByCategory = async (categoryName) => {
+  const url = 'https://dummyjson.com/products/category/' + categoryName;
+  try {
+    const response = await axios.get(url);
+    return response.data
+  } catch (err) {
+    return err.message
+  }
+}
