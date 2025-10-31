@@ -41,10 +41,14 @@ export default function DetailProduct() {
   const [priceDiscount, setPriceDiscount] = useState(0);
   const [imageChoice, setImageChoice] = useState('');
   const [activeTab, setActiveTab] = useState('reviews');
+  const [stock, setStock] = useState(0);
+  const [maxCount, setMaxCount] = useState(false);
+  const [minCount, setMinCount] = useState(true);
 
   useEffect(() => {
     (async () => {
       const data = await getSingleProducts(id);
+      setStock(data.stock);
       setImageChoice(data.images[0]);
       setRating(Math.floor(data.rating));
       const priceDis = getPriceDiscount(data.discountPercentage, data.price);
@@ -54,14 +58,27 @@ export default function DetailProduct() {
   }, [id]);
 
   const handleCountMines = () => {
-    if (quantity == 1) return quantity;
+    if (quantity <= 2) {
+      setMinCount(true);
+    }
+    if (quantity == 1) {
+      return quantity;
+    }
     let countNew = quantity - 1;
     setQuantity(countNew);
+    setMaxCount(false);
   };
 
   const handleCountPlus = () => {
+    if (quantity >= stock - 1) {
+      setMaxCount(true);
+    }
+    if (quantity == stock) {
+      return quantity;
+    }
     let countNew = quantity + 1;
     setQuantity(countNew);
+    setMinCount(false);
   };
 
   return (
@@ -160,6 +177,7 @@ export default function DetailProduct() {
                       <button
                         onClick={handleCountMines}
                         className="btn btn-sm sm:btn-md rounded-none"
+                        disabled={minCount}
                       >
                         <Minus size={12} />
                       </button>
@@ -169,6 +187,7 @@ export default function DetailProduct() {
                       <button
                         onClick={handleCountPlus}
                         className="btn btn-sm sm:btn-md rounded-none"
+                        disabled={maxCount}
                       >
                         <Plus size={12} />
                       </button>
