@@ -19,3 +19,13 @@ export const getSingleProducts = async (id) => {
     return err.message;
   }
 };
+
+export const getAllCategories = async () => {
+  const url = 'https://dummyjson.com/products/category-list';
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (err) {
+    return err.message;
+  }
+}
