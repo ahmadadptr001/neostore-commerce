@@ -3,9 +3,11 @@ import { getAllProducts } from '@/services/products';
 import { bestSelling } from '@/utils/products';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 export default function BestSellingProducts() {
+  const router = useRouter();
   const [items, setItmes] = useState([]);
 
   useEffect(() => {
@@ -66,12 +68,12 @@ export default function BestSellingProducts() {
           isDragging ? 'cursor-grabbing' : 'cursor-grab'
         } md:flex-1`}
       >
-        
         {items &&
           items.map((item, i) => (
             <div
               key={i}
               className="block min-w-[150px] sm:min-w-[220px] md:min-w-[250px]"
+              onClick={() => router.push('/products/details/' + item.id)}
             >
               {/* Image Card */}
               <div className="relative h-50 sm:h-60 md:h-64 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100 shadow-sm hover:shadow-md transition">
