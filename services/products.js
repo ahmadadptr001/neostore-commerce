@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getAllProducts = async () => {
-  const url = 'https://dummyjson.com/products';
+  const url = 'https://dummyjson.com/products?limit=0';
   try {
     const response = await axios.get(url);
     return response.data;
