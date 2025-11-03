@@ -83,13 +83,13 @@ export default function Navbar() {
     <>
       <RightSidebarComponent />
 
-      <header className="flex items-center gap-3 justify-between p-8 sticky top-0 backdrop-blur-3xl z-30">
+      <header className="flex items-center gap-3 justify-between p-5 px-8 sticky top-0 backdrop-blur-3xl z-30">
         {/* nav left */}
-        <div className="flex items-center gap-12 font-normal">
+        <div className="flex items-center gap-8 font-normal">
           {/* brand name */}
           <Link href="/" className="font-extrabold text-2xl">
             <span className='sm:hidden'>NEOSTORE</span>
-            <Image src="/logo.png" width={50} height={50} className='hidden sm:block rounded-full object-cover' alt='logo neostore' />
+            <Image src="/logo.png" width={45} height={45} className='hidden sm:block rounded-full object-cover' alt='logo neostore' />
           </Link>
 
           <ul className="hidden sm:flex">
