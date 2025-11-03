@@ -16,7 +16,7 @@ export default function LearnMorePage() {
           fill
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-700/70 to-pink-600/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-700/70 to-blue-600/70" />
         <div className="relative z-10 max-w-3xl mx-auto px-6">
           <h1 className="text-5xl font-extrabold text-white mb-6">
             Shopping Made Effortless
@@ -104,7 +104,7 @@ export default function LearnMorePage() {
       </section>
 
       {/* Footer CTA */}
-      <section className="py-24 px-6 text-center bg-gradient-to-r from-purple-600 to-pink-500 text-white">
+      <section className="py-24 px-6 text-center bg-gradient-to-r from-purple-600 to-blue-500 text-white">
         <h2 className="text-3xl font-bold mb-6">Ready to experience NeoStore?</h2>
         <Link href="/products">
           <button className="bg-white text-purple-600 px-10 py-4 rounded-full font-bold shadow-lg hover:bg-gray-100 transition">
