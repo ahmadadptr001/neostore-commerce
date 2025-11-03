@@ -108,7 +108,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Section */}
-      <div className="border-t border-base-300 py-6 text-center text-sm text-base-content/60">
+      <div className="border-t border-base-300 py-6 text-center text-sm text-gray-300">
         © {year ?? ''} <span>NEOSTORE</span>. Semua hak dilindungi.
       </div>
     </footer>
