@@ -9,7 +9,7 @@ body {
 
 @import 'tailwindcss';
 @theme {
-  --color-primary-new: #95bee4e9;
+  --color-primary-new: #2563EB;
 }
 @plugin "daisyui" {
   themes: emerald --default, emerald --prefersdark;
