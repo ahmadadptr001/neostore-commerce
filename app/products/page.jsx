@@ -18,8 +18,6 @@ export default function Products() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [query, setQuery] = useState('');
-  const [size, setSize] = useState('');
-  const sizes = ['XS', 'S', 'M', 'L', 'XL', '2X'];
 
   // UI states
   const [categoriesFilter, setCategoriesFilter] = useState([]);
@@ -90,7 +88,6 @@ export default function Products() {
     setRating(0);
     setMinPrice(0);
     setMaxPrice(1000);
-    setSize('');
   };
 
   // card produk
@@ -121,9 +118,6 @@ export default function Products() {
 
   const cardFilters = ({
     openFilters,
-    sizes,
-    size,
-    setSize,
     availability,
     setAvailability,
     category,
@@ -139,35 +133,18 @@ export default function Products() {
     resetFilters,
   }) => (
     <div className={`p-4 ${openFilters ? 'block' : 'hidden'} md:block`}>
-      <h2 className="font-semibold text-2xl">Filters Product</h2>
-
-      {/* Size */}
-      <p className="font-semibold mt-3">Size</p>
-      <div className="flex flex-wrap gap-1 mt-2">
-        {sizes.map((item) => (
-          <button
-            key={item}
-            type="button"
-            aria-pressed={size === item}
-            onClick={() => setSize(item)}
-            className={`p-2 border border-gray-300 px-3 cursor-pointer duration-300 
-            ${size === item ? 'bg-base-300' : 'hover:scale-105'}`}
-          >
-            {item}
-          </button>
-        ))}
-      </div>
-
-      {/* Reset */}
-      <div className="my-6">
+      <div className="flex items-center justify-between flex-nowrap">
+        <h2 className="font-semibold text-xl md:text-2xl">Filters Product</h2>
         <button
-        type='button'
+          type="button"
           onClick={resetFilters}
-          className="w-full py-2 px-4 cursor-pointer bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-md transition"
+          className="cursor-pointer underline text-red-700 text-sm md:text-base"
         >
           Reset Filters
         </button>
       </div>
+
+      {/* Reset */}
 
       {/* Availability */}
       <div className="collapse collapse-arrow !rounded-[0] border-dashed pt-5 border-t border-gray-300 mt-5">
@@ -389,9 +366,6 @@ export default function Products() {
       >
         {cardFilters({
           openFilters,
-          sizes,
-          size,
-          setSize,
           availability,
           setAvailability,
           category,
@@ -418,11 +392,16 @@ export default function Products() {
           className="md:hidden py-2 px-2 font-bold text-2xl flex items-center text-gray-600 gap-3 cursor-pointer mb-3"
           onClick={() => setOpenFilters(!openFilters)}
         >
-          Filters
-          {openFilters ? <ArrowLeft size={18} /> : <ArrowRight size={18} />}
+          {openFilters ? (
+            <ArrowLeft size={18} />
+          ) : (
+            <>
+              Filters <ArrowRight size={18} />
+            </>
+          )}
         </p>
 
-        <p className="mt-3 font-bold text-lg">All Products</p>
+        <p className="mt-3 font-semibold ms-2 text-lg">All Products</p>
         <div
           className={`grid ${
             openFilters ? 'grid-cols-1' : 'grid-cols-3'
