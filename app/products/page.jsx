@@ -1,112 +1,102 @@
 'use client';
-import {
-  getAllCategories,
-  getAllProducts,
-  getProductByCategory,
-} from '@/services/products';
-import { getAllCategoryName } from '@/utils/products';
-import {
-  ArrowLeft,
-  ArrowRight,
-  MinusCircle,
-  PlusCircle,
-  Search,
-  Star,
-} from 'lucide-react';
+import { getAllCategories, getAllProducts } from '@/services/products';
+import { Search, Star, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Products() {
   const router = useRouter();
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
-  const [rating, setRating] = useState(0);
-  const [queryInputSearch, setQueryInputSearch] = useState('');
-  const [products, setProducts] = useState([]);
-  const [available, setAvailable] = useState(0);
-  const [categoriesChoice, setCategoriesChoice] = useState('');
-  const [notAvailable, setNotAvailable] = useState(0);
-  const [openFilters, setOpenFilters] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [categoriesFilter, setCategoriesFilter] = useState([]);
 
+  // data utama
+  const [allProducts, setAllProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+
+  // filter states
+  const [availability, setAvailability] = useState(null); // 'available' | 'notAvailable' | null
+  const [category, setCategory] = useState('');
+  const [rating, setRating] = useState(0);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [query, setQuery] = useState('');
+  const [size, setSize] = useState('');
+  const sizes = ['XS', 'S', 'M', 'L', 'XL', '2X'];
+
+  // UI states
+  const [categoriesFilter, setCategoriesFilter] = useState([]);
+  const [openFilters, setOpenFilters] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // fetch awal
   useEffect(() => {
     (async () => {
       setLoading(true);
+      const res = await getAllProducts();
+      const cats = await getAllCategories();
 
-      let response = await getAllProducts();
-      if (response == 'Network Error') {
-        response = [];
-      }
-
-      response = response.products;
-      let allCategory = getAllCategoryName(response);
-      let allCategoryFilter = await getAllCategories();
-      setCategoriesFilter(allCategoryFilter);
-      setCategories(allCategory);
-
-      const availableProducts = response.filter((item) => item.stock > 0);
-      const notAvailableProducts = response.filter((item) => item.stock <= 0);
-
-      if (categoriesChoice) {
-        const responseByCategory = await getProductByCategory(categoriesChoice);
-        setProducts(responseByCategory.products);
+      if (res === 'Network Error') {
+        setAllProducts([]);
+        setProducts([]);
         setLoading(false);
         return;
       }
 
-      if (queryInputSearch) {
-        setProducts(
-          response.filter((item) =>
-            item.title
-              .toLowerCase()
-              .includes(queryInputSearch.toLocaleLowerCase())
-          )
-        );
-        setLoading(false);
-        return;
-      }
-
-      if (rating !== 0) {
-        const filterProductsRating = response.filter(
-          (item) => Math.floor(item.rating) === rating
-        );
-        setProducts(filterProductsRating);
-        setLoading(false);
-        return;
-      }
-
-      if (minPrice !== 0 || maxPrice !== 0) {
-        const filterRangePriceProducts = response.filter(
-          (item) => item.price >= minPrice && item.price <= maxPrice
-        );
-        setProducts(filterRangePriceProducts);
-        setLoading(false);
-        return;
-      }
-
-      setAvailable(availableProducts);
-      setNotAvailable(notAvailableProducts);
-      setProducts(response);
-
+      setAllProducts(res.products);
+      setProducts(res.products);
+      setCategoriesFilter(cats);
       setLoading(false);
     })();
-  }, [queryInputSearch, categoriesChoice, rating, minPrice, maxPrice]);
+  }, []);
 
-  const sizes = ['XS', 'S', 'M', 'L', 'XL', '2X'];
+  // pipeline filter
+  useEffect(() => {
+    let filtered = [...allProducts];
 
-  const cardCategories = (item) => (
-    <div
-      className="p-3 hover:bg-gray-300 select-none active:bg-gray-300 border border-gray-300 hover:scale-105 duration-500 cursor-pointer"
-      onClick={() => setCategoriesChoice(item)}
-    >
-      <p>{item}</p>
-    </div>
-  );
+    // search
+    if (query) {
+      filtered = filtered.filter((p) =>
+        p.title.toLowerCase().includes(query.toLowerCase())
+      );
+    }
 
+    // availability
+    if (availability === 'available') {
+      filtered = filtered.filter((p) => p.stock > 0);
+    } else if (availability === 'notAvailable') {
+      filtered = filtered.filter((p) => p.stock <= 0);
+    }
+
+    // category
+    if (category) {
+      filtered = filtered.filter((p) => p.category === category);
+    }
+
+    // rating
+    if (rating > 0) {
+      filtered = filtered.filter((p) => Math.floor(p.rating) === rating);
+    }
+
+    // price
+    filtered = filtered.filter(
+      (p) => p.price >= minPrice && p.price <= maxPrice
+    );
+
+    setProducts(filtered);
+  }, [query, availability, category, rating, minPrice, maxPrice, allProducts]);
+
+  // reset filter
+  const resetFilters = () => {
+    setAvailability(null);
+    setCategory('');
+    setRating(0);
+    setMinPrice(0);
+    setMaxPrice(1000);
+    setSize('');
+  };
+
+  // card produk
   const cardProducts = (item) => (
     <div
+      key={item.id}
       className="cursor-pointer"
       onClick={() => router.push('/products/details/' + item.id)}
     >
@@ -129,85 +119,114 @@ export default function Products() {
     </div>
   );
 
-  const cardFilters = () => (
+  const cardFilters = ({
+    openFilters,
+    sizes,
+    size,
+    setSize,
+    availability,
+    setAvailability,
+    category,
+    setCategory,
+    categoriesFilter,
+    minPrice,
+    setMinPrice,
+    maxPrice,
+    setMaxPrice,
+    rating,
+    setRating,
+    allProducts,
+  }) => (
     <div className={`p-4 ${openFilters ? 'block' : 'hidden'} md:block`}>
       <h2 className="font-semibold text-2xl">Filters Product</h2>
+
+      {/* Size */}
       <p className="font-semibold mt-3">Size</p>
       <div className="flex flex-wrap gap-1 mt-2">
-        {sizes.map((item, i) => (
+        {sizes.map((item) => (
           <div
-            key={i}
-            className="p-2 border border-gray-400 px-3 hover:scale-105 duration-500 cursor-pointer"
+            key={item}
+            onClick={() => setSize(item)}
+            className={`p-2 border border-gray-300 px-3 cursor-pointer duration-300 
+            ${size === item ? 'bg-base-300' : 'hover:scale-105'}`}
           >
             {item}
           </div>
         ))}
       </div>
-
-      {/* accordion fitlers */}
+      <div className="mt-6">
+        <button
+          onClick={resetFilters}
+          className="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-md transition"
+        >
+          Reset Filters
+        </button>
+      </div>
+      {/* Availability */}
       <div className="collapse collapse-arrow !rounded-[0] border-dashed pt-5 border-t border-gray-300 mt-5">
-        <input type="radio" name="my-accordion-2" defaultChecked />
+        <input type="radio" name="accordion" defaultChecked />
         <div className="collapse-title font-semibold p-1">Availability</div>
         <div className="collapse-content mt-3 p-1 text-gray-500">
-          <label htmlFor="av-1" className="flex items-center gap-2">
+          <label className="flex items-center gap-2">
             <input
               type="radio"
               name="availability"
-              id="av-1"
-              onChange={() => setProducts(available)}
+              checked={availability === 'available'}
+              onChange={() => setAvailability('available')}
               className="h-6 w-6"
             />
             <span>
-              Availability {'('}
-              <span className="text-info">{available.length}</span>
-              {')'}
+              Available (
+              <span className="text-info">
+                {allProducts.filter((p) => p.stock > 0).length}
+              </span>
+              )
             </span>
           </label>
-          <label htmlFor="av-2" className="mt-2 flex items-center gap-2 pb-5">
+          <label className="mt-2 flex items-center gap-2 pb-5">
             <input
               type="radio"
               name="availability"
-              id="av-2"
-              onChange={() => setProducts(notAvailable)}
+              checked={availability === 'notAvailable'}
+              onChange={() => setAvailability('notAvailable')}
               className="h-6 w-6"
             />
             <span>
-              Out of Stack {'('}
-              <span className="text-error">{notAvailable.length}</span>
-              {')'}
+              Out of Stock (
+              <span className="text-error">
+                {allProducts.filter((p) => p.stock <= 0).length}
+              </span>
+              )
             </span>
           </label>
         </div>
       </div>
 
+      {/* Category */}
       <div className="collapse collapse-arrow !rounded-[0] border-dashed pt-5 border-t border-gray-300">
-        <input type="radio" name="my-accordion-2" />
+        <input type="radio" name="accordion" />
         <div className="collapse-title font-semibold p-1">Category</div>
         <div className="collapse-content mt-3 p-1">
           <div className="pb-4 flex flex-col gap-1">
-            {categoriesFilter &&
-              categoriesFilter.map((item, i) => (
-                <label
-                  key={i}
-                  htmlFor={`category-${item}`}
-                  className="flex items-center gap-2"
-                >
-                  <input
-                    type="radio"
-                    name="categories"
-                    onChange={(e) => setCategoriesChoice(item)}
-                    id={`category-${item}`}
-                    className="w-7 h-7"
-                  />
-                  <p className="line-clamp-1 text-gray-500">{item}</p>
-                </label>
-              ))}
+            {categoriesFilter.map((item) => (
+              <label key={item} className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="categories"
+                  checked={category === item}
+                  onChange={() => setCategory(item)}
+                  className="w-7 h-7"
+                />
+                <p className="line-clamp-1 text-gray-500">{item}</p>
+              </label>
+            ))}
           </div>
         </div>
       </div>
 
+      {/* Price Range */}
       <div className="collapse collapse-arrow !rounded-[0] border-dashed pt-5 border-t border-gray-300">
-        <input type="radio" name="my-accordion-2" />
+        <input type="radio" name="accordion" />
         <div className="collapse-title font-semibold p-1">Price Range</div>
         <div className="collapse-content mt-3 p-1">
           <div className="w-full max-w-xs p-6 bg-base-100 border border-base-300 rounded-2xl shadow-sm">
@@ -281,46 +300,23 @@ export default function Products() {
         </div>
       </div>
 
+      {/* Ratings */}
       <div className="collapse collapse-arrow !rounded-[0] border-dashed pt-5 border-t border-gray-300">
-        <input type="radio" name="my-accordion-2" />
+        <input type="radio" name="accordion" />
         <div className="collapse-title font-semibold p-1">Ratings</div>
         <div className="collapse-content mt-3 p-1">
           <div className="rating">
-            <input
-              type="radio"
-              name="rating-2"
-              className="mask mask-star-2 bg-orange-400"
-              aria-label="1 star"
-              onChange={() => setRating(1)}
-            />
-            <input
-              type="radio"
-              name="rating-2"
-              className="mask mask-star-2 bg-orange-400"
-              aria-label="2 star"
-              onChange={() => setRating(2)}
-            />
-            <input
-              type="radio"
-              name="rating-2"
-              className="mask mask-star-2 bg-orange-400"
-              aria-label="3 star"
-              onChange={() => setRating(3)}
-            />
-            <input
-              type="radio"
-              name="rating-2"
-              className="mask mask-star-2 bg-orange-400"
-              aria-label="4 star"
-              onChange={() => setRating(4)}
-            />
-            <input
-              type="radio"
-              name="rating-2"
-              className="mask mask-star-2 bg-orange-400"
-              aria-label="5 star"
-              onChange={() => setRating(5)}
-            />
+            {[1, 2, 3, 4, 5].map((r) => (
+              <input
+                key={r}
+                type="radio"
+                name="rating"
+                className="mask mask-star-2 bg-orange-400"
+                aria-label={`${r} star`}
+                checked={rating === r}
+                onChange={() => setRating(r)}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -329,7 +325,8 @@ export default function Products() {
 
   return (
     <section className="overflow-x-hidden grid grid-cols-3 min-h-[80vh]">
-      <div className=" md:col-span-2 md:order-2 order-1 col-span-3 md:text-start text-center p-4 flex flex-col justify-center">
+      {/* Search */}
+      <div className="md:col-span-2 md:order-2 order-1 col-span-3 p-4 flex flex-col justify-center">
         <label
           htmlFor="search-products"
           className="mt-4 mx-auto w-full md:mx-0 max-w-md rounded-md p-3 bg-gray-200 flex items-center justify-between"
@@ -338,28 +335,46 @@ export default function Products() {
           <input
             className="input-none w-full text-end"
             type="text"
-            value={queryInputSearch}
-            onChange={(e) => setQueryInputSearch(e.target.value)}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             placeholder="Search"
             id="search-products"
           />
         </label>
       </div>
 
+      {/* Sidebar Filters */}
       <div
         className={`flex flex-col px-5 py-0 md:py-10 md:order-1 md:row-span-2 order-2 row-span-1 ${
           openFilters ? 'col-span-2' : 'col-span-1'
         }`}
       >
-        {cardFilters()}
+        {cardFilters({
+          openFilters,
+          sizes,
+          size,
+          setSize,
+          availability,
+          setAvailability,
+          category,
+          setCategory,
+          categoriesFilter,
+          minPrice,
+          setMinPrice,
+          maxPrice,
+          setMaxPrice,
+          rating,
+          setRating,
+          allProducts,
+        })}
       </div>
 
+      {/* Products Grid */}
       <div
         className={`md:order-3 md:col-span-2 order-3 p-3 ${
           openFilters ? 'col-span-1' : 'col-span-3'
         } duration-500`}
       >
-        {/* filter kategory */}
         <p
           className="md:hidden py-2 px-2 font-bold text-2xl flex items-center text-gray-600 gap-3 cursor-pointer mb-3"
           onClick={() => setOpenFilters(!openFilters)}
@@ -367,46 +382,27 @@ export default function Products() {
           Filters
           {openFilters ? <ArrowLeft size={18} /> : <ArrowRight size={18} />}
         </p>
-        <div className="flex flex-wrap items-center gap-3">
-          {categories &&
-            categories.map((item, i) => (
-              <div key={i}>{cardCategories(item)}</div>
-            ))}
-        </div>
 
-        {/* grid products */}
+        <p className="mt-3 font-bold text-lg">All Products</p>
         <div
           className={`grid ${
             openFilters ? 'grid-cols-1' : 'grid-cols-3'
           } md:grid-cols-3 lg:grid-cols-4 gap-6 text-xs sm:text-sm mt-5 overflow-y-scroll h-150 p-5`}
         >
           {loading ? (
-            <>
-              <div className="skeleton h-40 sm:h-60"></div>
-              <div className="skeleton h-40 sm:h-60"></div>
-              <div className="skeleton h-40 sm:h-60"></div>
-              <div className="skeleton h-40 sm:h-60"></div>
-              <div className="skeleton h-40 sm:h-60"></div>
-              <div className="skeleton h-40 sm:h-60"></div>
-              <div className="skeleton h-40 sm:h-60"></div>
-              <div className="skeleton h-40 sm:h-60"></div>
-            </>
+            Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="skeleton h-40 sm:h-60"></div>
+            ))
+          ) : products.length === 0 ? (
+            <div className="p-3 col-span-3">
+              <img
+                className="mx-auto"
+                src="https://media.tenor.com/9X3Fc4fequQAAAAi/not-at-all-work.gif"
+                alt="gif tidak ditemukan"
+              />
+            </div>
           ) : (
-            <>
-              {products.length == 0 && (
-                <div className="p-3 col-span-3">
-                  <img
-                    className="mx-auto"
-                    src="https://media.tenor.com/9X3Fc4fequQAAAAi/not-at-all-work.gif"
-                    alt="gif tidak ditemukan"
-                  />
-                </div>
-              )}
-              {products &&
-                products.map((item, i) => (
-                  <div key={i}>{cardProducts(item)}</div>
-                ))}
-            </>
+            products.map(cardProducts)
           )}
         </div>
       </div>
