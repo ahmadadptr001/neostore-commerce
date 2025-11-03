@@ -1,8 +1,7 @@
 'use client';
 
-import { getSingleProducts } from '@/services/products';
-import { formatDate, getPriceDiscount } from '@/utils/products';
-import Calendar from 'daisyui/components/calendar';
+import { getSingleProducts } from '../../../../services/products';
+import { formatDate, getPriceDiscount } from '../../../../utils/products';
 import {
   Calendar1,
   CalendarDays,
