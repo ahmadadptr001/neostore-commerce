@@ -1,5 +1,5 @@
 'use client';
-import { getAllCategories, getAllProducts } from '@/services/products';
+import { getAllCategories, getAllProducts } from '../../services/products';
 import { Search, Star, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

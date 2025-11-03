@@ -1,5 +1,6 @@
 import { Minus, Search } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function HeroSection() {
   return (
@@ -9,7 +10,7 @@ export default function HeroSection() {
         <h2 className='text-5xl font-bold'>Summer Sale</h2>
         <p>Up to 70% off on selected items. Limited time offer!</p>
         <div className="flex items-center flex-nowrap gap-2">
-          <button className='btn bg-white text-[#2563EB] rounded-md p-4'>Shop Now</button>
+          <Link href="/products" className='btn bg-white text-[#2563EB] rounded-md p-4'>Shop Now</Link>
           <button className='btn hover:bg-white border-2 border-white bg-[#2563EB] text-white hover:text-[#2563EB] rounded-md p-4'>Learn More</button>
         </div>
       </div>

@@ -1,12 +1,12 @@
-import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
+import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar";
 
 export const metadata = {
-  title: 'NeoStor Contacts - Your Next-Gen Shopping Experience',
+  title: 'NeoStor products - Your Next-Gen Shopping Experience',
   description: 'Pilih produk yang sesuai dengan Anda',
 };
 
-export default function RootLayoutProducts({ children }) {
+export default function RootLayoutLearn({ children }) {
   return (
       <div className="bg-gradient-to-b from-base-200 via-base-100 to-base-300 min-h-screen flex flex-col">
         <Navbar />
