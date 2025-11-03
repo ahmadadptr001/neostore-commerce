@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function SpecialDeels() {
@@ -42,9 +43,9 @@ export default function SpecialDeels() {
         ) : (
           <p className='text-red-400 font-semibold'>This offer has expired!</p>
         )}
-        <button className="btn bg-white w-fit mx-auto mt-5">
+        <Link href="/products" className="btn bg-white w-fit mx-auto mt-5">
           <p className='text-[#9333EA]'>Shop Sale Now</p>
-        </button>
+        </Link>
       </div>
     </section>
   );
