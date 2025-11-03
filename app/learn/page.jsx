@@ -106,7 +106,7 @@ export default function LearnMorePage() {
       {/* Footer CTA */}
       <section className="py-24 px-6 text-center bg-gradient-to-r from-purple-600 to-pink-500 text-white">
         <h2 className="text-3xl font-bold mb-6">Ready to experience NeoStore?</h2>
-        <Link href="https://neostore-commerce.vercel.app/">
+        <Link href="/products">
           <button className="bg-white text-purple-600 px-10 py-4 rounded-full font-bold shadow-lg hover:bg-gray-100 transition">
             Shop Now
           </button>
