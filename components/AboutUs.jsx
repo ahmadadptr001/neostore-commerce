@@ -12,7 +12,7 @@ export default function AboutUs() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 my-12 mt-15 gap-12 sm:gap-18">
         <div className="text-center">
-          <span className="rounded-full bg-primary-new p-6 block w-fit mx-auto">
+          <span className="rounded-full bg-primary-new text-white p-6 block w-fit mx-auto">
             <Flower2 size={40} />
           </span>
           <h3 className="mt-4 font-semibold">Large Assortmen</h3>
@@ -23,7 +23,7 @@ export default function AboutUs() {
         </div>
 
         <div className="text-center">
-          <span className="rounded-full bg-primary-new p-6 block w-fit mx-auto">
+          <span className="rounded-full bg-primary-new text-white p-6 block w-fit mx-auto">
             <Package size={40} />
           </span>
           <h3 className="mt-4 font-semibold">Fast & Free Shipping</h3>
@@ -34,7 +34,7 @@ export default function AboutUs() {
         </div>
 
         <div className="text-center">
-          <span className="rounded-full bg-primary-new p-6 block w-fit mx-auto">
+          <span className="rounded-full bg-primary-new text-white p-6 block w-fit mx-auto">
             <PhoneOutgoing size={40} />
           </span>
           <h3 className="mt-4 font-semibold">24/7 Support</h3>

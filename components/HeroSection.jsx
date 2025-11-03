@@ -11,7 +11,7 @@ export default function HeroSection() {
         <p>Up to 70% off on selected items. Limited time offer!</p>
         <div className="flex items-center flex-nowrap gap-2">
           <Link href="/products" className='btn bg-white text-[#2563EB] rounded-md p-4'>Shop Now</Link>
-          <button className='btn hover:bg-white border-2 border-white bg-[#2563EB] text-white hover:text-[#2563EB] rounded-md p-4'>Learn More</button>
+          <Link href="/learn" className='btn hover:bg-white border-2 border-white bg-[#2563EB] text-white hover:text-[#2563EB] rounded-md p-4'>Learn More</Link>
         </div>
       </div>
 

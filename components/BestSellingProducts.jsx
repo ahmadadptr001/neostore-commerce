@@ -53,7 +53,7 @@ export default function BestSellingProducts() {
           Discover & buy the most popular products at Neostore and make your
           shopping easier than ever.
         </p>
-        <button className="btn btn-lg bg-primary-new mt-6 flex items-center gap-2 ms-auto sm:mx-0">
+        <button className="btn btn-lg text-white bg-primary-new mt-6 flex items-center gap-2 ms-auto sm:mx-0">
           See More <ArrowRight size={15} />
         </button>
       </div>
