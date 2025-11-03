@@ -1,5 +1,5 @@
 'use client';
-import { Facebook, Instagram, Twitter } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -89,19 +89,19 @@ export default function Footer() {
           </h6>
           <ul className="flex items-center gap-5 space-y-2 text-sm">
             <li className="p-3 bg-gradient-to-r from-red-400 to-blue-600 rounded-full text-white">
-              <Link href="#" className="hover:link link-hover">
+              <a target='_blank' href="https://www.instagram.com/accounts/login/?next=%2Fahmadadptr%2F&source=omni_redirect" className="hover:link link-hover">
                 <Instagram />
-              </Link>
+              </a>
             </li>
             <li className="p-3 bg-cyan-400 rounded-full text-white">
-              <Link href="#" className="hover:link link-hover">
-                <Twitter />
-              </Link>
+              <a target='_blank' href="https://www.youtube.com/@ahmadadptr" className="hover:link link-hover">
+                <Youtube />
+              </a>
             </li>
             <li className="p-3 bg-blue-500 rounded-full text-white">
-              <Link href="#" className="hover:link link-hover">
+              <a target='_blank' href="https://facebook.com/ahmadadptr" className="hover:link link-hover">
                 <Facebook />
-              </Link>
+              </a>
             </li>
           </ul>
         </nav>
