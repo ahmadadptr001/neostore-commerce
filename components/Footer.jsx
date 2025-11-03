@@ -1,8 +1,16 @@
+'use client';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Footer() {
+  const [year, setYear] = useState(null);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
   return (
     <footer className="bg-base-200 text-base-content mt-10 border-t border-base-300">
       <div className="container mx-auto px-6 py-14 grid grid-cols-2 md:grid-cols-4 gap-10">
@@ -27,7 +35,7 @@ export default function Footer() {
         </aside>
 
         {/* Layanan */}
-        <nav className='flex flex-col items-center md:items-start'> 
+        <nav className="flex flex-col items-center md:items-start">
           <h6 className="footer-title mb-4 text-base font-semibold text-base-content/80 uppercase tracking-wide">
             Layanan
           </h6>
@@ -51,7 +59,7 @@ export default function Footer() {
         </nav>
 
         {/* Perusahaan */}
-        <nav className='flex flex-col items-center md:items-start'>
+        <nav className="flex flex-col items-center md:items-start">
           <h6 className="footer-title mb-4 text-base font-semibold text-base-content/80 uppercase tracking-wide">
             Perusahaan
           </h6>
@@ -75,22 +83,22 @@ export default function Footer() {
         </nav>
 
         {/* Sosial Media */}
-        <nav className='flex flex-col items-center col-span-2 md:col-span-1 md:items-start'>
+        <nav className="flex flex-col items-center col-span-2 md:col-span-1 md:items-start">
           <h6 className="footer-title mb-4 text-base font-semibold text-base-content/80 uppercase tracking-wide">
             Sosial Media
           </h6>
           <ul className="flex items-center gap-5 space-y-2 text-sm">
-            <li className='p-3 bg-gradient-to-r from-red-400 to-blue-600 rounded-full text-white'>
+            <li className="p-3 bg-gradient-to-r from-red-400 to-blue-600 rounded-full text-white">
               <Link href="#" className="hover:link link-hover">
                 <Instagram />
               </Link>
             </li>
-            <li className='p-3 bg-cyan-400 rounded-full text-white'>
+            <li className="p-3 bg-cyan-400 rounded-full text-white">
               <Link href="#" className="hover:link link-hover">
                 <Twitter />
               </Link>
             </li>
-            <li className='p-3 bg-blue-500 rounded-full text-white'>
+            <li className="p-3 bg-blue-500 rounded-full text-white">
               <Link href="#" className="hover:link link-hover">
                 <Facebook />
               </Link>
@@ -101,9 +109,7 @@ export default function Footer() {
 
       {/* Bottom Section */}
       <div className="border-t border-base-300 py-6 text-center text-sm text-base-content/60">
-        © {new Date().getFullYear()}{' '}
-        <span className="font-semibold text-primary">NEOSTORE</span>. Semua hak
-        dilindungi.
+        © {year ?? ''} <span>NEOSTORE</span>. Semua hak dilindungi.
       </div>
     </footer>
   );
