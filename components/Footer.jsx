@@ -12,7 +12,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-base-200 text-base-content mt-10 border-t border-base-300">
+    <footer className="bg-gray-900 text-gray-400 mt-10 border-t border-base-300">
       <div className="container mx-auto px-6 py-14 grid grid-cols-2 md:grid-cols-4 gap-10">
         {/* Brand Section */}
         <aside className="flex col-span-2 flex-col items-center md:items-start text-center md:text-left">
@@ -28,15 +28,15 @@ export default function Footer() {
               NEOSTORE
             </h2>
           </div>
-          <p className="text-sm leading-relaxed text-base-content/70 max-w-xs">
+          <p className="text-sm leading-relaxed text-gray-400 max-w-xs">
             Platform belanja digital modern yang menghadirkan produk-produk
             terbaik dengan pengalaman berbelanja cepat, aman, dan terpercaya.
           </p>
         </aside>
 
         {/* Layanan */}
-        <nav className="flex flex-col items-center md:items-start">
-          <h6 className="footer-title mb-4 text-base font-semibold text-base-content/80 uppercase tracking-wide">
+        <nav className="flex flex-col items-center md:items-start ">
+          <h6 className="mb-4 text-base font-semibold text-white uppercase tracking-wide">
             Layanan
           </h6>
           <ul className="space-y-2 text-sm">
@@ -60,7 +60,7 @@ export default function Footer() {
 
         {/* Perusahaan */}
         <nav className="flex flex-col items-center md:items-start">
-          <h6 className="footer-title mb-4 text-base font-semibold text-base-content/80 uppercase tracking-wide">
+          <h6 className="mb-4 text-base font-semibold text-white uppercase tracking-wide">
             Perusahaan
           </h6>
           <ul className="space-y-2 text-sm">
@@ -84,7 +84,7 @@ export default function Footer() {
 
         {/* Sosial Media */}
         <nav className="flex flex-col items-center col-span-2 md:col-span-1 md:items-start">
-          <h6 className="footer-title mb-4 text-base font-semibold text-base-content/80 uppercase tracking-wide">
+          <h6 className="mb-4 text-base font-semibold text-white uppercase tracking-wide">
             Sosial Media
           </h6>
           <ul className="flex items-center gap-5 space-y-2 text-sm">
