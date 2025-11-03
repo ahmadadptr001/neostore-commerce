@@ -59,17 +59,29 @@ export default function Navbar() {
           {/* untuk sosmed nya */}
           <ul className="mt-7 flex items-center gap-5 px-4">
             <li className="bg-red-500 p-4 rounded-full">
-              <a href="" target="_blank" className="text-white">
+              <a
+                href="https://www.youtube.com/@ahmadadptr"
+                target="_blank"
+                className="text-white"
+              >
                 <Youtube className="hover:scale-120" />
               </a>
             </li>
             <li className="bg-blue-500 p-4 rounded-full">
-              <a href="" target="_blank" className="text-white">
+              <a
+                href="https://facebook.com/ahmadadptr"
+                target="_blank"
+                className="text-white"
+              >
                 <Facebook className="hover:scale-120" />
               </a>
             </li>
             <li className="bg-gradient-to-r from-[#f58529] via-[#dd2a7b] via-[#8134af] to-[#515bd4] p-4 rounded-full">
-              <a href="" target="_blank" className="text-white">
+              <a
+                href="https://www.instagram.com/accounts/login/?next=%2Fahmadadptr%2F&source=omni_redirect"
+                target="_blank"
+                className="text-white"
+              >
                 <Instagram className="hover:scale-120" />
               </a>
             </li>
@@ -88,8 +100,14 @@ export default function Navbar() {
         <div className="flex items-center gap-8 font-normal">
           {/* brand name */}
           <Link href="/" className="font-extrabold text-2xl">
-            <span className='sm:hidden'>NEOSTORE</span>
-            <Image src="/logo.png" width={45} height={45} className='hidden sm:block rounded-full object-cover' alt='logo neostore' />
+            <span className="sm:hidden">NEOSTORE</span>
+            <Image
+              src="/logo.png"
+              width={45}
+              height={45}
+              className="hidden sm:block rounded-full object-cover"
+              alt="logo neostore"
+            />
           </Link>
 
           <ul className="hidden sm:flex">
