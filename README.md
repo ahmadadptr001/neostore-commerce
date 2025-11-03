@@ -1,94 +1,102 @@
+
+---
+
 <h1 align="center">🛍️ NEO STORE</h1>
-<img src="https://neostore-commerce.vercel.app/preview.png" alt="NeoStore Preview" width="100%"/>
+
 <p align="center">
-  <i>"Discover & shop the most popular products — easy, fast, and interactive."</i>
+  <img src="https://neostore-commerce.vercel.app/preview.png" alt="NeoStore Preview" width="100%"/>
 </p>
 
 <p align="center">
-  <a href="https://neostore-commerce.vercel.app/" target="_blank">
-    🔗 <b>Live Demo</b>
-  </a> |
-  <a href="#-fitur-utama">✨ Fitur</a> |
-  <a href="#️-cara-menjalankan-proyek">⚙️ Cara Jalankan</a> |
-  <a href="#-kontribusi">🤝 Kontribusi</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/github/license/ahmadadptr001/neostore?style=flat-square&color=blueviolet" />
-  <img src="https://img.shields.io/github/stars/ahmadadptr001/neostore?style=flat-square&color=yellow" />
-  <img src="https://img.shields.io/github/issues/ahmadadptr001/neostore?style=flat-square&color=orange" />
-  <img src="https://img.shields.io/github/last-commit/ahmadadptr001/neostore?style=flat-square&color=green" />
+  <b><i>Discover & shop the most popular products — fast, simple, and interactive.</i></b>
 </p>
 
 ---
 
-## 🪄 Tentang Proyek
+## 🚀 Live Demo
 
-**Neo Store** adalah aplikasi **e-commerce** berbasis web yang menampilkan **produk populer dan terbaru** secara interaktif.  
-Dibangun menggunakan **Next.js**, **React**, **Tailwind CSS**, dan **Lucide Icons**.  
-Cocok untuk pengguna yang ingin belanja online dengan pengalaman visual yang menarik dan interaktif.
-
----
-
-## ✨ Fitur Utama
-
-| 🌟 Fitur                      | 🧩 Deskripsi                                                                  |
-| :---------------------------- | :---------------------------------------------------------------------------- |
-| 🖼️ **Best Selling Products**  | Tampilan produk terlaris dengan scroll horizontal interaktif.                 |
-| 🗂️ **Kategori & Filter**      | Pilih produk berdasarkan kategori, harga, atau popularitas.                   |
-| 💳 **Keranjang Belanja**      | Tambahkan produk ke keranjang dan lihat total harga.                          |
-| 🔍 **Pencarian Cepat**        | Cari produk berdasarkan nama atau deskripsi.                                  |
-| 🌐 **Responsive Layout**      | Bisa diakses dari desktop maupun perangkat mobile.                            |
-| 🎨 **Hover & Animasi Produk** | Efek hover dan animasi ringan untuk pengalaman interaktif lebih menyenangkan. |
+<p align="center">
+  <a href="https://neostore-commerce.vercel.app/">
+    <img src="https://img.shields.io/badge/🔗%20Open%20NeoStore-0f172a?style=for-the-badge&logo=vercel&logoColor=white&labelColor=1e40af" />
+  </a>
+</p>
 
 ---
 
-## 🧭 Struktur Halaman
-
-<details>
-  <summary>📂 Klik untuk lihat struktur halaman lengkap</summary>
-
-| Halaman              | Fungsi                                                  |
-| -------------------- | ------------------------------------------------------- |
-| 🏠 **Beranda.jsx**   | Hero section + best selling products scroll horizontal. |
-| 📦 **Produk.jsx**    | Daftar produk lengkap + filter kategori & harga.        |
-| 🛒 **Keranjang.jsx** | Tabel keranjang + total harga.                          |
-| 📘 **Panduan.jsx**   | Petunjuk penggunaan aplikasi untuk pengguna baru.       |
-| 💫 **Tentang.jsx**   | Informasi proyek, tim, dan tujuan aplikasi.             |
-| 📬 **Kontak.jsx**    | Form kontak dan tautan media sosial interaktif.         |
-
-</details>
-
----
-
-## 🧩 Teknologi yang Digunakan
+## ✨ Features
 
 <div align="center">
 
-| Teknologi                | Deskripsi                                        |
-| :----------------------- | :----------------------------------------------- |
-| ⚛️ **React.js**          | Framework frontend modern berbasis komponen.     |
-| 💅 **Tailwind CSS**      | Styling cepat, konsisten, dan responsif.         |
-| ⚡ **Next.js**           | Framework React untuk SSR & optimisasi performa. |
-| 🎨 **Lucide Icons**      | Ikon interaktif untuk tombol dan UI.             |
-| 📦 **Axios / Fetch API** | Mengambil data produk dari backend / API.        |
+| 🌟 Feature               | Description                                   |
+| ------------------------ | --------------------------------------------- |
+| 🖼️ **Best Sellers**      | Interactive horizontal scroll of top products |
+| 🗂️ **Smart Filters**     | Filter by category, price, or popularity      |
+| 💳 **Cart System**       | Add products & view total instantly           |
+| 🔍 **Quick Search**      | Search by name or description                 |
+| 📱 **Responsive**        | Works on desktop & mobile                     |
+| 🎨 **Smooth Animations** | Hover & micro-interactions                    |
 
 </div>
 
 ---
 
-## ⚙️ Cara Menjalankan Proyek
+## 🧩 Tech Stack
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=react,next,tailwind,vercel,js,html,css" height="48" />
+  <br/>
+  <img src="https://img.shields.io/badge/Lucide%20Icons-0f172a?style=for-the-badge&logo=lucide&logoColor=white&labelColor=9333ea" />
+</p>
+
+---
+
+## ⚡ Getting Started
 
 ```bash
-# 1️⃣ Clone repositori
+# Clone repo
 git clone https://github.com/ahmadadptr001/neostore.git
 
-# 2️⃣ Masuk ke direktori proyek
+# Enter directory
 cd neostore
 
-# 3️⃣ Instal dependensi
+# Install dependencies
 npm install
 
-# 4️⃣ Jalankan aplikasi di mode pengembangan
+# Run dev server
 npm run dev
 ```
+
+---
+
+## 📂 Project Structure
+
+<details>
+  <summary>Click to expand</summary>
+
+```
+src/
+ ├─ pages/
+ │   ├─ index.jsx        # Home
+ │   ├─ products.jsx     # Product list + filters
+ │   ├─ cart.jsx         # Shopping cart
+ │   ├─ about.jsx        # About project
+ │   └─ contact.jsx      # Contact form
+ ├─ components/          # Reusable UI components
+ ├─ styles/              # Tailwind configs & global styles
+ └─ utils/               # Helpers & API calls
+```
+
+</details>
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Fork, branch, and PR 🚀
+
+---
+
+## 📜 License
+
+MIT © [Ahmad](https://github.com/ahmadadptr001)
+
