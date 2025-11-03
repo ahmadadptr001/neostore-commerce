@@ -136,6 +136,7 @@ export default function Products() {
     rating,
     setRating,
     allProducts,
+    resetFilters,
   }) => (
     <div className={`p-4 ${openFilters ? 'block' : 'hidden'} md:block`}>
       <h2 className="font-semibold text-2xl">Filters Product</h2>
@@ -144,31 +145,38 @@ export default function Products() {
       <p className="font-semibold mt-3">Size</p>
       <div className="flex flex-wrap gap-1 mt-2">
         {sizes.map((item) => (
-          <div
+          <button
             key={item}
+            type="button"
+            aria-pressed={size === item}
             onClick={() => setSize(item)}
             className={`p-2 border border-gray-300 px-3 cursor-pointer duration-300 
             ${size === item ? 'bg-base-300' : 'hover:scale-105'}`}
           >
             {item}
-          </div>
+          </button>
         ))}
       </div>
-      <div className="mt-6">
+
+      {/* Reset */}
+      <div className="my-6">
         <button
+        type='button'
           onClick={resetFilters}
-          className="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-md transition"
+          className="w-full py-2 px-4 cursor-pointer bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-md transition"
         >
           Reset Filters
         </button>
       </div>
+
       {/* Availability */}
       <div className="collapse collapse-arrow !rounded-[0] border-dashed pt-5 border-t border-gray-300 mt-5">
         <input type="radio" name="accordion" defaultChecked />
         <div className="collapse-title font-semibold p-1">Availability</div>
         <div className="collapse-content mt-3 p-1 text-gray-500">
-          <label className="flex items-center gap-2">
+          <label htmlFor="available" className="flex items-center gap-2">
             <input
+              id="available"
               type="radio"
               name="availability"
               checked={availability === 'available'}
@@ -183,8 +191,12 @@ export default function Products() {
               )
             </span>
           </label>
-          <label className="mt-2 flex items-center gap-2 pb-5">
+          <label
+            htmlFor="notAvailable"
+            className="mt-2 flex items-center gap-2 pb-5"
+          >
             <input
+              id="notAvailable"
               type="radio"
               name="availability"
               checked={availability === 'notAvailable'}
@@ -209,8 +221,13 @@ export default function Products() {
         <div className="collapse-content mt-3 p-1">
           <div className="pb-4 flex flex-col gap-1">
             {categoriesFilter.map((item) => (
-              <label key={item} className="flex items-center gap-2">
+              <label
+                key={item}
+                htmlFor={`cat-${item}`}
+                className="flex items-center gap-2"
+              >
                 <input
+                  id={`cat-${item}`}
                   type="radio"
                   name="categories"
                   checked={category === item}
@@ -236,12 +253,18 @@ export default function Products() {
 
             <div className="flex items-center justify-between gap-6 mb-4">
               <div className="flex flex-col items-start w-full">
-                <label className="text-sm text-base-content/70 mb-1">Min</label>
+                <label
+                  htmlFor="min-price"
+                  className="text-sm text-base-content/70 mb-1"
+                >
+                  Min
+                </label>
                 <div className="relative w-full">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-base-content/70">
                     $
                   </span>
                   <input
+                    id="min-price"
                     type="number"
                     min="0"
                     max={maxPrice}
@@ -253,12 +276,18 @@ export default function Products() {
               </div>
 
               <div className="flex flex-col items-start w-full">
-                <label className="text-sm text-base-content/70 mb-1">Max</label>
+                <label
+                  htmlFor="max-price"
+                  className="text-sm text-base-content/70 mb-1"
+                >
+                  Max
+                </label>
                 <div className="relative w-full">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-base-content/70">
                     $
                   </span>
                   <input
+                    id="max-price"
                     type="number"
                     min={minPrice}
                     max="1000"
@@ -271,7 +300,11 @@ export default function Products() {
             </div>
 
             <div className="flex flex-col gap-3">
+              <label htmlFor="range-min" className="sr-only">
+                Minimum Price
+              </label>
               <input
+                id="range-min"
                 type="range"
                 min="0"
                 max="1000"
@@ -280,7 +313,11 @@ export default function Products() {
                 onChange={(e) => setMinPrice(Number(e.target.value))}
                 className="range range-sm accent-primary"
               />
+              <label htmlFor="range-max" className="sr-only">
+                Maximum Price
+              </label>
               <input
+                id="range-max"
                 type="range"
                 min="0"
                 max="1000"
@@ -305,19 +342,20 @@ export default function Products() {
         <input type="radio" name="accordion" />
         <div className="collapse-title font-semibold p-1">Ratings</div>
         <div className="collapse-content mt-3 p-1">
-          <div className="rating">
+          <>
             {[1, 2, 3, 4, 5].map((r) => (
-              <input
-                key={r}
-                type="radio"
-                name="rating"
-                className="mask mask-star-2 bg-orange-400"
-                aria-label={`${r} star`}
-                checked={rating === r}
-                onChange={() => setRating(r)}
-              />
+              <label key={r} htmlFor={`rating-${r}`} className="rating">
+                <input
+                  id={`rating-${r}`}
+                  type="radio"
+                  name="rating"
+                  className="mask mask-star-2 bg-orange-400"
+                  checked={rating === r}
+                  onChange={() => setRating(r)}
+                />
+              </label>
             ))}
-          </div>
+          </>
         </div>
       </div>
     </div>
@@ -366,6 +404,7 @@ export default function Products() {
           rating,
           setRating,
           allProducts,
+          resetFilters,
         })}
       </div>
 
