@@ -104,10 +104,10 @@ export default function Products() {
         loading="lazy"
       />
       <p className="text-gray-500 mt-3">{item.category}</p>
-      <div className="mt-1 flex flex-col">
+      <div className="mt-1 flex flex-col text-[14px]">
         <h3 className="font-[550] text-md line-clamp-1">{item.title}</h3>
-        <div className="flex items-center flex-wrap justify-between px-2 mt-1">
-          <p className="font-bold text-error">$ {item.price}</p>
+        <div className="flex items-center flex-wrap justify-between px-1 mt-1">
+          <p className="font-bold text-error">${item.price}</p>
           <p className="font-bold text-warning flex items-center gap-1">
             <Star size={10} /> {item.rating}
           </p>
@@ -134,7 +134,7 @@ export default function Products() {
   }) => (
     <div className={`p-4 ${openFilters ? 'block' : 'hidden'} md:block`}>
       <div className="flex items-center justify-between flex-nowrap">
-        <h2 className="font-semibold text-xl md:text-2xl">Filters Product</h2>
+        <h2 className="font-semibold text-lg md:text-2xl">Filters Product</h2>
         <button
           type="button"
           onClick={resetFilters}
@@ -404,7 +404,7 @@ export default function Products() {
         <p className="mt-3 font-semibold ms-2 text-lg">All Products</p>
         <div
           className={`grid ${
-            openFilters ? 'grid-cols-1' : 'grid-cols-3'
+            openFilters ? 'grid-cols-1' : 'grid-cols-2'
           } md:grid-cols-3 lg:grid-cols-4 gap-6 text-xs sm:text-sm mt-5 overflow-y-scroll h-150 p-5`}
         >
           {loading ? (

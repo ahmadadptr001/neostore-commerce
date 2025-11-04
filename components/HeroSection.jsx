@@ -4,18 +4,18 @@ import Link from 'next/link'
 
 export default function HeroSection() {
   return (
-    <section className="relative h-[80vh] flex items-center justify-center text-center">
+    <section className="relative h-[80vh] flex items-center justify-center text-center bg-blue-800">
       {/* Background Image */}
       <Image
         src="/hero-image.png"
         alt="Hero Background"
         fill
         priority
-        className="object-cover"
+        className="object-cover object-[center_top] md:object-center"
       />
 
       {/* Overlay Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-700/30 to-indigo-600/30" />
+      <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-blue-900/60 via-indigo-800/50 to-purple-700/50" />
 
       {/* Content */}
       <div className="relative z-10 max-w-3xl mx-auto px-6">
@@ -27,14 +27,14 @@ export default function HeroSection() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/products">
-          <button className="btn btn-secondary btn-lg">
+            <button className="bg-white text-blue-700 px-8 py-3 rounded-full font-bold shadow hover:bg-gray-100 transition">
               Shop Now
-          </button>
+            </button>
           </Link>
           <Link href="/learn">
-          <button className="btn btn-secondary btn-lg btn-soft">
+            <button className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-blue-700 transition">
               Learn More
-          </button>
+            </button>
           </Link>
         </div>
       </div>
