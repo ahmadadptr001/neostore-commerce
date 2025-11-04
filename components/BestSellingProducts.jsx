@@ -43,9 +43,12 @@ export default function BestSellingProducts() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div className="max-w-md">
-          <h2 className="text-2xl md:text-3xl font-bold">🔥 Best Selling Products</h2>
+          <h2 className="text-2xl md:text-3xl font-bold">
+            🔥 Best Selling Products
+          </h2>
           <p className="mt-3 text-gray-500 text-sm md:text-base leading-relaxed">
-            Discover & buy the most popular products at NeoStore and make your shopping easier than ever.
+            Discover & buy the most popular products at NeoStore and make your
+            shopping easier than ever.
           </p>
         </div>
         <Link
@@ -79,13 +82,13 @@ export default function BestSellingProducts() {
           {items.map((item, i) => (
             <div
               key={i}
-              className={`relative min-w-[220px] md:min-w-[280px] snap-center group cursor-pointer transition-transform duration-500 ${
-                activeIndex === i ? 'scale-105 shadow-xl' : 'scale-95 opacity-90'
-              }`}
+              className={`relative min-w-[220px] md:min-w-[280px] snap-center group cursor-pointer transition-transform duration-500
+                
+              `}
               onClick={() => router.push('/products/details/' + item.id)}
             >
               {/* Image Card */}
-              <div className="relative h-60 md:h-72 rounded-xl overflow-hidden shadow-md group-hover:shadow-2xl group-hover:scale-[1.03] transition-all duration-500">
+              <div className="relative h-60 md:h-72 rounded-xl overflow-hidden shadow-md  transition-all duration-500">
                 <Image
                   src={item.images[0]}
                   alt={item.title}
@@ -100,7 +103,9 @@ export default function BestSellingProducts() {
                 <h3 className="font-semibold text-sm sm:text-base line-clamp-1">
                   {item.title}
                 </h3>
-                <p className="text-gray-500 text-sm sm:text-base">$ {item.price}</p>
+                <p className="text-gray-500 text-sm sm:text-base">
+                  $ {item.price}
+                </p>
               </div>
             </div>
           ))}
