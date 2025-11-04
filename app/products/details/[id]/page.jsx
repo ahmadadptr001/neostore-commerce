@@ -176,17 +176,17 @@ export default function DetailProduct() {
                       <button
                         onClick={handleCountMines}
                         className="btn btn-sm sm:btn-md rounded-none"
-                        disabled={minCount}
+                        disabled={stock ? minCount : true}
                       >
                         <Minus size={12} />
                       </button>
                       <span className="btn btn-sm sm:btn-md btn-ghost rounded-none">
-                        {quantity}
+                        {stock ? quantity : "0"}
                       </span>
                       <button
                         onClick={handleCountPlus}
                         className="btn btn-sm sm:btn-md rounded-none"
-                        disabled={maxCount}
+                        disabled={stock ? maxCount : true}
                       >
                         <Plus size={12} />
                       </button>
