@@ -15,7 +15,7 @@ export default function HeroSection() {
       />
 
       {/* Overlay Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-700/70 to-indigo-600/70" />
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-700/45 to-indigo-600/45" />
 
       {/* Content */}
       <div className="relative z-10 max-w-3xl mx-auto px-6">
@@ -27,14 +27,14 @@ export default function HeroSection() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/products">
-            <button className="bg-white text-blue-700 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition">
+          <button className="btn btn-secondary btn-lg">
               Shop Now
-            </button>
+          </button>
           </Link>
           <Link href="/learn">
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-blue-500 transition border-2 border-white">
+          <button className="btn btn-secondary btn-lg btn-soft">
               Learn More
-            </button>
+          </button>
           </Link>
         </div>
       </div>
