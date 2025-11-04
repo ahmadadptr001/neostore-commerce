@@ -12,7 +12,7 @@ export default function BoxModel() {
     <div className="w-auto h-auto">
       <Canvas camera={{ position: [0, 1, -2], fov: 50 }}>
         <ambientLight intensity={0.5} />
-        <directionalLight position={[2, 2, 2]} intensity={1} />
+        <directionalLight position={[2, 2, 2]} intensity={8} />
         <Model />
         <OrbitControls enableZoom autoRotate autoRotateSpeed={2} />
       </Canvas>
