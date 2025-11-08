@@ -24,6 +24,12 @@ export const useProductStore = create(
         }
       },
 
+      removeToCart: (productID) => {
+        set({
+          cart: get().cart.filter(item => item.id !== productID)
+        })
+      },
+
       updateQuantity: (productID, quantity) => {
         set({
           cart: get().cart.map((item) =>
