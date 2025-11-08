@@ -8,14 +8,14 @@ export const useProductStore = create(
       cart: [],
 
       addToCart: (product) => {
-        const existing = get().cart.find((item) => item.id === product.id);
+        const existing = get().cart.find((item) => item.id == product.id);
         if (existing) {
           set({
-            cart: [get().cart.map((item) => {
-              item.id === product.id
-                ? { ...item, quantity: item.quantity + 1 }
+            cart: get().cart.map((item) => {
+              return item.id === product.id
+                ? { ...item, quantity: item.quantity + product.quantity }
                 : item;
-            })],
+            }),
           });
         } else {
           set({
@@ -26,9 +26,11 @@ export const useProductStore = create(
 
       updateQuantity: (productID, quantity) => {
         set({
-          cart : get().cart.map(item => item.id === productID ? {...item, quantity} : item)
-        })
-      }
+          cart: get().cart.map((item) =>
+            item.id === productID ? { ...item, quantity } : item
+          ),
+        });
+      },
     }),
     {
       name: 'cart-storage',
