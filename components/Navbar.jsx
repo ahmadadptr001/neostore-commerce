@@ -5,6 +5,7 @@ import {
   AlignEndVertical,
   CircleUserRound,
   Facebook,
+  Heart,
   Instagram,
   ShoppingCart,
   X,
@@ -128,6 +129,11 @@ export default function Navbar() {
         {/* nav right */}
         <div className="flex items-center gap-8">
           <ul className="flex items-center gap-6">
+            <li>
+              <Link href="/wishlist" className="hover:scale-115 cursor-pointer">
+                <Heart size={17} />
+              </Link>
+            </li>
             <li>
               <Link href="/cart" className="hover:scale-115 cursor-pointer">
                 <ShoppingCart size={17} />
