@@ -6,6 +6,8 @@ export const useProductStore = create(
   persist(
     (set, get) => ({
       cart: [],
+      wishlist: [],
+      notifWishlistExist: false,
 
       addToCart: (product) => {
         const existing = get().cart.find((item) => item.id == product.id);
@@ -37,6 +39,20 @@ export const useProductStore = create(
           ),
         });
       },
+
+      addToWishList: (product) => {
+        const exist = get().wishlist.find(item => item.id === product.id);
+        if (exist) {
+          set({
+            notifWishlistExist: true,
+          })
+        } else {
+          set({
+            wishlist: [...get().wishlist, product],
+            notifWishlistExist: false
+          })
+        }
+      }
     }),
     {
       name: 'cart-storage',
