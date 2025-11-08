@@ -10,6 +10,7 @@ export default function CartProducts() {
   const [minCount, setMinCount] = useState(false);
   const [maxCount, setMaxCount] = useState(false);
   const [cartProducts, setCartProducts] = useState(null);
+  const [cartWish, setCartWish] = useState(null);
   const [viewNotifWish, setViewNotifWish] = useState(false);
 
   const updateQuantity = useProductStore((state) => state.updateQuantity);
@@ -21,6 +22,7 @@ export default function CartProducts() {
 
     if (carts) {
       setCartProducts(carts.state.cart);
+      setCartWish(carts.state.wishlist);
     }
   }, []);
 
@@ -66,11 +68,12 @@ export default function CartProducts() {
 
   const handleAddWishList = (item) => {
     addToWishList(item);
-    setViewNotifWish(true)
+    setViewNotifWish(true);
   };
+
   const cardCartProducts = (item) => {
     const priceDiscount = getPriceDiscount(item.discountPercentage, item.price);
-    
+
     return (
       <div className="flex flex-col md:flex-row gap-4 border-y border-gray-300 py-3">
         {/* Gambar produk */}
@@ -159,6 +162,27 @@ export default function CartProducts() {
     );
   };
 
+  const cardCartWish = (item) => {
+    const priceDiscount = getPriceDiscount(item.discountPercentage, item.price);
+    return (
+      <div className="border items-center border-gray-300 rounded-md p-4 flex gap-3 mt-3 justify-between">
+        <img
+          src={item.images[0]}
+          alt={item.title}
+          className="w-18 h-18 object-contain"
+        />
+        <div className="flex flex-col gap-1">
+          <p className="font-semibold line-clamp-1">
+            {item.title}
+          </p>
+          <small>${priceDiscount}</small>
+        </div>
+
+        <Link href={`/products/details/${item.id}`} className="btn btn-ghost text-secondary">Move to Cart</Link>
+      </div>
+    );
+  };
+
   const cardCartEmpty = () => {
     return (
       <div className="flex flex-col items-center justify-center text-center animate-fadeIn py-5">
@@ -182,25 +206,23 @@ export default function CartProducts() {
 
   return (
     <main className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <WishNotification show={viewNotifWish} onClose={() => setViewNotifWish(false)}/>
+      <WishNotification
+        show={viewNotifWish}
+        onClose={() => setViewNotifWish(false)}
+      />
       {/* Left Section */}
       <section className="lg:col-span-2 space-y-4">
         {/* Header Actions */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <Link
             href="/products"
             className="flex items-center gap-2 hover:underline decoration-secondary"
           >
             <ArrowLeft size={18} className="stroke-secondary fill-secondary" />
-            <span className="text-secondary text-sm sm:text-base">
+            <span className="text-secondary text-base">
               Continue Shopping
             </span>
           </Link>
-          <button className="flex items-center gap-2 hover:underline decoration-error">
-            <Trash size={18} className="stroke-error fill-error" />
-            <span className="text-error text-sm sm:text-base">Clear Cart</span>
-          </button>
-        </div>
+          
 
         {/* Cart Box */}
         <div className="mt-4 bg-white shadow-md p-4 sm:p-6 rounded-md">
@@ -273,40 +295,11 @@ export default function CartProducts() {
         </h3>
         <div className="grid grid-cols-1 md:gap-3 md:grid-cols-2">
           {/* card products */}
-          <div className="border items-center border-gray-300 rounded-md p-4 flex gap-3 mt-3 justify-between">
-            <img
-              src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
-              alt=""
-              className="w-18 h-18 object-contain"
-            />
-            <div className="flex flex-col gap-1">
-              <p className="font-semibold line-clamp-1">
-                Essence Mascara Lash Princess
-              </p>
-              <small>$9.99</small>
-            </div>
-
-            <button className="btn btn-ghost text-secondary">
-              Move to Cart
-            </button>
-          </div>
-          <div className="border items-center border-gray-300 rounded-md p-4 flex gap-3 mt-3 justify-between">
-            <img
-              src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
-              alt=""
-              className="w-18 h-18 object-contain"
-            />
-            <div className="flex flex-col gap-1">
-              <p className="font-semibold line-clamp-1">
-                Essence Mascara Lash Princess
-              </p>
-              <small>$9.99</small>
-            </div>
-
-            <button className="btn btn-ghost text-secondary">
-              Move to Cart
-            </button>
-          </div>
+          {cartWish !== null && cartWish.length !== 0 && cartWish !== undefined
+            ? cartWish.map((data) => (
+                <div key={data.id}>{cardCartWish(data)}</div>
+              ))
+            : cardCartEmpty()}
         </div>
       </section>
     </main>
