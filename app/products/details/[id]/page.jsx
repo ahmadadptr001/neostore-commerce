@@ -1,20 +1,19 @@
 'use client';
 
+import { useProductStore } from '../../../../store/useProductStore';
 import { getSingleProducts } from '../../../../services/products';
 import { formatDate, getPriceDiscount } from '../../../../utils/products';
+import CartNotification from '../../../../components/CartNotification';
+import WishNotification from '../../../../components/WishNotification';
 import {
-  Calendar1,
   CalendarDays,
-  CalendarIcon,
   Car,
   CircleCheck,
   CircleX,
-  Dot,
   Hammer,
   Heart,
   Mail,
   MapPin,
-  MessageCircle,
   MessagesSquare,
   Minus,
   Package2,
@@ -43,6 +42,23 @@ export default function DetailProduct() {
   const [stock, setStock] = useState(0);
   const [maxCount, setMaxCount] = useState(false);
   const [minCount, setMinCount] = useState(true);
+  const [showNotif, setShowNotif] = useState(false);
+  const [showNotif2, setShowNotif2] = useState(false);
+
+  const addToCart = useProductStore((state) => state.addToCart);
+  const addToWishList = useProductStore((state) => state.addToWishList);
+
+  const [cartProduct, setCartProduct] = useState({
+    id: product?.id ?? null,
+    title: product?.title ?? '',
+    images: product?.images ?? '',
+    price: product?.price ?? 0,
+    stock: product?.stock ?? 0,
+    discountPercentage: product?.discountPercentage ?? 0,
+    sku: product?.sku ?? '',
+    brand: product?.brand ?? '',
+    quantity: quantity,
+  });
 
   useEffect(() => {
     (async () => {
@@ -52,7 +68,21 @@ export default function DetailProduct() {
       setRating(Math.floor(data.rating));
       const priceDis = getPriceDiscount(data.discountPercentage, data.price);
       setPriceDiscount(priceDis);
-      if (data) setProduct(data);
+
+      if (data) {
+        setProduct(data);
+        setCartProduct({
+          id: data?.id ?? null,
+          title: data?.title ?? '',
+          images: data?.images ?? '',
+          price: data?.price ?? 0,
+          stock: data?.stock ?? 0,
+          discountPercentage: data?.discountPercentage ?? 0,
+          sku: data?.sku ?? '',
+          brand: data?.brand ?? '',
+          quantity: quantity,
+        });
+      }
     })();
   }, [id]);
 
@@ -61,11 +91,13 @@ export default function DetailProduct() {
       setMinCount(true);
     }
     if (quantity == 1) {
+      setCartProduct({ ...cartProduct, quantity: quantity });
       return quantity;
     }
     let countNew = quantity - 1;
     setQuantity(countNew);
     setMaxCount(false);
+    setCartProduct({ ...cartProduct, quantity: countNew });
   };
 
   const handleCountPlus = () => {
@@ -73,11 +105,24 @@ export default function DetailProduct() {
       setMaxCount(true);
     }
     if (quantity == stock) {
+      setCartProduct({ ...cartProduct, quantity: quantity });
+
       return quantity;
     }
     let countNew = quantity + 1;
     setQuantity(countNew);
     setMinCount(false);
+    setCartProduct({ ...cartProduct, quantity: countNew });
+  };
+
+  const handleToCart = () => {
+    addToCart(cartProduct);
+    setShowNotif(true);
+  };
+
+  const handleToWishlist = () => {
+    addToWishList(cartProduct);
+    setShowNotif2(true);
   };
 
   return (
@@ -85,6 +130,14 @@ export default function DetailProduct() {
       {product ? (
         <>
           <section className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-8 grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <CartNotification
+              show={showNotif}
+              onClose={() => setShowNotif(false)}
+            />
+            <WishNotification
+              show={showNotif2}
+              onClose={() => setShowNotif2(false)}
+            />
             {/* Gambar produk */}
             <div className="flex flex-col gap-4 items-center">
               <img
@@ -181,7 +234,7 @@ export default function DetailProduct() {
                         <Minus size={12} />
                       </button>
                       <span className="btn btn-sm sm:btn-md btn-ghost rounded-none">
-                        {stock ? quantity : "0"}
+                        {stock ? quantity : '0'}
                       </span>
                       <button
                         onClick={handleCountPlus}
@@ -199,11 +252,17 @@ export default function DetailProduct() {
 
                 {/* Tombol aksi */}
                 <div className="mt-5 flex flex-col gap-3">
-                  <button className="btn btn-secondary w-full py-6">
+                  <button
+                    className="btn btn-secondary w-full py-6"
+                    onClick={handleToCart}
+                  >
                     <ShoppingCart size={18} /> Add to Cart
                   </button>
                   <div className="grid grid-cols-2 gap-2">
-                    <button className="btn btn-outline btn-sm sm:btn-md flex justify-center items-center gap-2">
+                    <button
+                      onClick={() => handleToWishlist()}
+                      className="btn btn-outline btn-sm sm:btn-md flex justify-center items-center gap-2"
+                    >
                       <Heart size={15} /> Wishlist
                     </button>
                     <button className="btn btn-outline btn-sm sm:btn-md flex justify-center items-center gap-2">
