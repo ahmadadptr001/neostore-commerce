@@ -1,71 +1,76 @@
+'use client';
+import WishNotification from '../../components/WishNotification';
+import { useProductStore } from '../../store/useProductStore';
 import { getPriceDiscount } from '../../utils/products';
 import { ArrowLeft, Heart, Minus, Plus, Trash } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function CartProducts() {
-  const fakeData = [
-    {
-      id: 12,
-      title: 'Annibale Colombo Sofa',
-      description:
-        'The Annibale Colombo Sofa is a sophisticated and comfortable seating option, featuring exquisite design and premium upholstery for your living room.',
-      category: 'furniture',
-      price: 2499.99,
-      discountPercentage: 14.4,
-      rating: 3.92,
-      stock: 60,
-      tags: ['furniture', 'sofas'],
-      brand: 'Annibale Colombo',
-      sku: 'FUR-ANN-ANN-012',
-      weight: 6,
-      dimensions: { width: 12.75, height: 20.55, depth: 19.06 },
-      warrantyInformation: 'Lifetime warranty',
-      shippingInformation: 'Ships in 1 week',
-      availabilityStatus: 'In Stock',
-      reviews: [
-        {
-          rating: 3,
-          comment: 'Very unhappy with my purchase!',
-          date: '2025-04-30T09:41:02.053Z',
-          reviewerName: 'Christian Perez',
-          reviewerEmail: 'christian.perez@x.dummyjson.com',
-        },
-        {
-          rating: 5,
-          comment: 'Fast shipping!',
-          date: '2025-04-30T09:41:02.053Z',
-          reviewerName: 'Lillian Bishop',
-          reviewerEmail: 'lillian.bishop@x.dummyjson.com',
-        },
-        {
-          rating: 1,
-          comment: 'Poor quality!',
-          date: '2025-04-30T09:41:02.053Z',
-          reviewerName: 'Lillian Simmons',
-          reviewerEmail: 'lillian.simmons@x.dummyjson.com',
-        },
-      ],
-      returnPolicy: '7 days return policy',
-      minimumOrderQuantity: 1,
-      meta: {
-        createdAt: '2025-04-30T09:41:02.053Z',
-        updatedAt: '2025-04-30T09:41:02.053Z',
-        barcode: '1777662847736',
-        qrCode: 'https://cdn.dummyjson.com/public/qr-code.png',
-      },
-      images: [
-        'https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/1.webp',
-        'https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/2.webp',
-        'https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/3.webp',
-      ],
-      thumbnail:
-        'https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/thumbnail.webp',
-    },
-  ];
+  const [minCount, setMinCount] = useState(false);
+  const [maxCount, setMaxCount] = useState(false);
+  const [cartProducts, setCartProducts] = useState(null);
+  const [viewNotifWish, setViewNotifWish] = useState(false);
 
+  const updateQuantity = useProductStore((state) => state.updateQuantity);
+  const removeToCart = useProductStore((state) => state.removeToCart);
+  const addToWishList = useProductStore((state) => state.addToWishList);
+
+  useEffect(() => {
+    const carts = JSON.parse(localStorage.getItem('cart-storage'));
+
+    if (carts) {
+      setCartProducts(carts.state.cart);
+    }
+  }, []);
+
+  const handleCountMines = (item) => {
+    if (item.quantity <= 2) {
+      setMinCount(true);
+    }
+    if (item.quantity == 1) {
+      updateQuantity(item.id, item.quantity);
+      window.location.reload();
+      return item.quantity;
+    }
+    let countNew = item.quantity - 1;
+    setMaxCount(false);
+    updateQuantity(item.id, countNew);
+    window.location.reload();
+  };
+
+  const handleCountPlus = (item) => {
+    if (item.uantity >= item.stock - 1) {
+      setMaxCount(true);
+    }
+    if (item.quantity == item.stock) {
+      updateQuantity(item.id, item.quantity);
+      window.location.reload();
+      return item.quantity;
+    }
+    let countNew = item.quantity + 1;
+    setMinCount(false);
+    updateQuantity(item.id, countNew);
+    window.location.reload();
+  };
+
+  const handleRemoveCart = (id) => {
+    const resultNotif = confirm('remove this product from your cart?');
+
+    if (resultNotif) {
+      removeToCart(id);
+      window.location.reload();
+      return;
+    }
+  };
+
+  const handleAddWishList = (item) => {
+    addToWishList(item);
+    setViewNotifWish(true)
+  };
   const cardCartProducts = (item) => {
     const priceDiscount = getPriceDiscount(item.discountPercentage, item.price);
-
+    
     return (
       <div className="flex flex-col md:flex-row gap-4 border-y border-gray-300 py-3">
         {/* Gambar produk */}
@@ -102,23 +107,37 @@ export default function CartProducts() {
             <div className="flex gap-3 md:gap-1 justify-between mt-2 md:mt-0 items-center">
               {/* button increment dan decrement */}
               <div className="flex-items-center">
-                <button className="btn btn-sm btn-base-200 rounded-none rounded-l-md">
-                  <Plus size={13} />
+                <button
+                  className="btn btn-sm btn-base-200 rounded-none rounded-l-md"
+                  disabled={minCount}
+                  onClick={() => handleCountMines(item)}
+                >
+                  <Minus size={13} />
                 </button>
                 <button className="btn btn-sm bg-transparent rounded-none ">
-                  1
+                  {item.quantity}
                 </button>
-                <button className="btn btn-sm btn-base-200 rounded-none rounded-r-md">
-                  <Minus size={13} />
+                <button
+                  className="btn btn-sm btn-base-200 rounded-none rounded-r-md"
+                  disabled={maxCount}
+                  onClick={() => handleCountPlus(item)}
+                >
+                  <Plus size={13} />
                 </button>
               </div>
 
               {/* button remove and save */}
               <div className="flex items-center">
-                <button className="btn btn-error rounded-none">
+                <button
+                  className="btn btn-error rounded-none"
+                  onClick={() => handleRemoveCart(item.id)}
+                >
                   <Trash className="fill-white stroke-error stroke-1 size-5" />
                 </button>
-                <button className="btn btn-info rounded-none">
+                <button
+                  className="btn btn-info rounded-none"
+                  onClick={() => handleAddWishList(item)}
+                >
                   <Heart className="fill-white stroke-info stroke-1 size-5" />
                 </button>
               </div>
@@ -140,8 +159,30 @@ export default function CartProducts() {
     );
   };
 
+  const cardCartEmpty = () => {
+    return (
+      <div className="flex flex-col items-center justify-center text-center animate-fadeIn py-5">
+        <div className="text-6xl mb-4 animate-bounce">🛒</div>
+        <h2 className="text-xl font-semibold text-gray-700">
+          Your cart is still empty
+        </h2>
+        <p className="text-gray-500 mt-2">
+          Discover your favorite products and add them to your cart!
+        </p>
+
+        <Link
+          href="/products"
+          className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+        >
+          Start Shopping →
+        </Link>
+      </div>
+    );
+  };
+
   return (
     <main className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <WishNotification show={viewNotifWish} onClose={() => setViewNotifWish(false)}/>
       {/* Left Section */}
       <section className="lg:col-span-2 space-y-4">
         {/* Header Actions */}
@@ -167,14 +208,19 @@ export default function CartProducts() {
             <h2 className="font-semibold text-lg sm:text-xl md:text-2xl">
               Shopping Cart
             </h2>
-            <span className="text-gray-500 text-sm">1 item</span>
+            <span className="text-gray-500 text-sm">
+              {cartProducts?.length} items
+            </span>
           </div>
 
           {/* Product Item */}
-          {fakeData &&
-            fakeData.map((data) => (
-              <div key={data.id}>{cardCartProducts(data)}</div>
-            ))}
+          {cartProducts !== null &&
+          cartProducts.length !== 0 &&
+          cartProducts !== undefined
+            ? cartProducts.map((data) => (
+                <div key={data.id}>{cardCartProducts(data)}</div>
+              ))
+            : cardCartEmpty()}
 
           {/* more info */}
           <div className="mt-3">
