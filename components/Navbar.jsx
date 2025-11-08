@@ -129,7 +129,7 @@ export default function Navbar() {
         <div className="flex items-center gap-8">
           <ul className="flex items-center gap-6">
             <li>
-              <Link href="/" className="hover:scale-115 cursor-pointer">
+              <Link href="/cart" className="hover:scale-115 cursor-pointer">
                 <ShoppingCart size={17} />
               </Link>
             </li>
