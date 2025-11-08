@@ -125,6 +125,35 @@ export default function DetailProduct() {
     setShowNotif2(true);
   };
 
+  const handleShare = async () => {
+    const shareData = {
+      title: 'Check this product',
+      text: 'You might like this:',
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        console.log('Shared successfully');
+      } catch (err) {
+        console.warn('Share cancelled or failed', err);
+      }
+    } else {
+      // Fallback if Web Share API not supported
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        alert('Link copied to clipboard');
+      } catch {
+        window.open(
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            shareData.text
+          )}&url=${encodeURIComponent(shareData.url)}`,
+          '_blank'
+        );
+      }
+    }
+  };
   return (
     <>
       {product ? (
@@ -265,7 +294,7 @@ export default function DetailProduct() {
                     >
                       <Heart size={15} /> Wishlist
                     </button>
-                    <button className="btn btn-outline btn-sm sm:btn-md flex justify-center items-center gap-2">
+                    <button onClick={handleShare} className="btn btn-outline btn-sm sm:btn-md flex justify-center items-center gap-2">
                       <Share2Icon size={15} /> Share
                     </button>
                   </div>
