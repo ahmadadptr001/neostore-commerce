@@ -11,11 +11,11 @@ export const useProductStore = create(
         const existing = get().cart.find((item) => item.id === product.id);
         if (existing) {
           set({
-            cart: get().cart.map((item) => {
+            cart: [get().cart.map((item) => {
               item.id === product.id
                 ? { ...item, quantity: item.quantity + 1 }
                 : item;
-            }),
+            })],
           });
         } else {
           set({
