@@ -291,7 +291,7 @@ export default function CartProducts() {
       {/* Saved for Later Section */}
       <section className="bg-white lg:col-span-2 shadow-md p-4 sm:p-6 rounded-md">
         <h3 className="font-semibold text-xl">
-          Saved for Later {'('}2 items{')'}
+          Saved for Later {'('}{cartProducts?.length} items{')'}
         </h3>
         <div className="grid grid-cols-1 md:gap-3 md:grid-cols-2">
           {/* card products */}
