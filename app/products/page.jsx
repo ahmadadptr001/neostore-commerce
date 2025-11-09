@@ -1,11 +1,11 @@
 'use client';
 import { getAllCategories, getAllProducts } from '../../services/products';
 import { Search, Star, ArrowLeft, ArrowRight, Image } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Products() {
-  const router = useRouter();
 
   // data utama
   const [allProducts, setAllProducts] = useState([]);
@@ -92,10 +92,10 @@ export default function Products() {
 
   // card produk
   const cardProducts = (item) => (
-    <div
+    <Link
       key={item.id}
       className="cursor-pointer"
-      onClick={() => router.push('/products/details/' + item.id)}
+      href={`/products/details/${item.id}`}
     >
       <img
         className="object-contain h-50 w-50 mx-auto"
@@ -113,7 +113,7 @@ export default function Products() {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 
   const cardFilters = ({
