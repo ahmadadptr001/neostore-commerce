@@ -11,12 +11,23 @@ import {
   X,
   Youtube,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ActiveLinkSidebar from './ActiveLinkSidebar';
 import Image from 'next/image';
 
 export default function Navbar() {
   const [openRightSidebar, setOpenRightSidebar] = useState(false);
+  const [lengthCartProducts, setLengthCartProducts] = useState([]);
+  const [lengthCartWish, setLengthCartWish] = useState([]);
+
+  useEffect(() => {
+    const carts = JSON.parse(localStorage.getItem('cart-storage'));
+
+    if (carts) {
+      setLengthCartProducts(carts.state.cart.length);
+      setLengthCartWish(carts.state.wishlist.length);
+    }
+  }, []);
 
   const RightSidebarComponent = () => {
     return (
@@ -129,15 +140,21 @@ export default function Navbar() {
         {/* nav right */}
         <div className="flex items-center gap-8">
           <ul className="flex items-center gap-6">
-            <li>
+            <li className='relative'>
               <Link href="/wishlist" className="hover:scale-115 cursor-pointer">
                 <Heart size={17} />
               </Link>
+              <div className="badge badge-info rounded-full text-xs absolute -right-4 -top-4 py-0 px-2">
+                {lengthCartWish}
+              </div>
             </li>
-            <li>
+            <li className="relative">
               <Link href="/cart" className="hover:scale-115 cursor-pointer">
                 <ShoppingCart size={17} />
               </Link>
+              <div className="badge badge-error rounded-full text-xs absolute -right-4 -top-4 py-0 px-2">
+                {lengthCartProducts}
+              </div>
             </li>
             <li>
               <Link href="/" className="hover:scale-115 cursor-pointer">
