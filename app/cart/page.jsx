@@ -299,7 +299,9 @@ export default function CartProducts() {
             ? cartWish.map((data) => (
                 <div key={data.id}>{cardCartWish(data)}</div>
               ))
-            : cardCartEmpty()}
+            : (
+              <span className='mt-3 text-error'>Empty</span>
+            )}
         </div>
       </section>
     </main>
