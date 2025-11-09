@@ -167,19 +167,24 @@ export default function CartProducts() {
     const priceDiscount = getPriceDiscount(item.discountPercentage, item.price);
     return (
       <div className="border items-center border-gray-300 rounded-md p-4 flex gap-3 mt-3 justify-between">
-        <img
-          src={item.images[0]}
-          alt={item.title}
-          className="w-18 h-18 object-contain"
-        />
-        <div className="flex flex-col gap-1">
-          <p className="font-semibold line-clamp-1">
-            {item.title}
-          </p>
-          <small>${priceDiscount}</small>
+        <div className="flex items-center">
+          <img
+            src={item.images[0]}
+            alt={item.title}
+            className="w-18 h-18 object-contain"
+          />
+          <div className="flex flex-col gap-1">
+            <p className="font-semibold line-clamp-1">{item.title}</p>
+            <small>${priceDiscount}</small>
+          </div>
         </div>
 
-        <Link href={`/products/details/${item.id}`} className="btn btn-ghost text-secondary">Move to Cart</Link>
+        <Link
+          href={`/products/details/${item.id}`}
+          className="btn btn-ghost text-secondary"
+        >
+          Move to Cart
+        </Link>
       </div>
     );
   };
@@ -214,16 +219,13 @@ export default function CartProducts() {
       {/* Left Section */}
       <section className="lg:col-span-2 space-y-4">
         {/* Header Actions */}
-          <Link
-            href="/products"
-            className="flex items-center gap-2 hover:underline decoration-secondary"
-          >
-            <ArrowLeft size={18} className="stroke-secondary fill-secondary" />
-            <span className="text-secondary text-base">
-              Continue Shopping
-            </span>
-          </Link>
-          
+        <Link
+          href="/products"
+          className="flex items-center gap-2 hover:underline decoration-secondary"
+        >
+          <ArrowLeft size={18} className="stroke-secondary fill-secondary" />
+          <span className="text-secondary text-base">Continue Shopping</span>
+        </Link>
 
         {/* Cart Box */}
         <div className="mt-4 bg-white shadow-md p-4 sm:p-6 rounded-md">
@@ -292,17 +294,20 @@ export default function CartProducts() {
       {/* Saved for Later Section */}
       <section className="bg-white lg:col-span-2 shadow-md p-4 sm:p-6 rounded-md">
         <h3 className="font-semibold text-xl">
-          Saved for Later {'('}{cartProducts?.length} items{')'}
+          Saved for Later {'('}
+          {cartProducts?.length} items{')'}
         </h3>
         <div className="grid grid-cols-1 md:gap-3 md:grid-cols-2">
           {/* card products */}
-          {cartWish !== null && cartWish.length !== 0 && cartWish !== undefined
-            ? cartWish.map((data) => (
-                <div key={data.id}>{cardCartWish(data)}</div>
-              ))
-            : (
-              <span className='mt-3 text-error'>Empty</span>
-            )}
+          {cartWish !== null &&
+          cartWish.length !== 0 &&
+          cartWish !== undefined ? (
+            cartWish.map((data) => (
+              <div key={data.id}>{cardCartWish(data)}</div>
+            ))
+          ) : (
+            <span className="mt-3 text-error">Empty</span>
+          )}
         </div>
       </section>
     </main>
