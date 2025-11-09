@@ -56,6 +56,7 @@ export default function DetailProduct() {
     stock: product?.stock ?? 0,
     discountPercentage: product?.discountPercentage ?? 0,
     sku: product?.sku ?? '',
+    tags: product?.tags ?? '',
     brand: product?.brand ?? '',
     quantity: quantity,
   });
@@ -79,6 +80,7 @@ export default function DetailProduct() {
           stock: data?.stock ?? 0,
           discountPercentage: data?.discountPercentage ?? 0,
           sku: data?.sku ?? '',
+          tags: data?.sku ?? '',
           brand: data?.brand ?? '',
           quantity: quantity,
         });
@@ -294,7 +296,10 @@ export default function DetailProduct() {
                     >
                       <Heart size={15} /> Wishlist
                     </button>
-                    <button onClick={handleShare} className="btn btn-outline btn-sm sm:btn-md flex justify-center items-center gap-2">
+                    <button
+                      onClick={handleShare}
+                      className="btn btn-outline btn-sm sm:btn-md flex justify-center items-center gap-2"
+                    >
                       <Share2Icon size={15} /> Share
                     </button>
                   </div>
