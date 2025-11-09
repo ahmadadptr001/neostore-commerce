@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Products() {
-
   // data utama
   const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);
@@ -97,12 +96,25 @@ export default function Products() {
       className="cursor-pointer"
       href={`/products/details/${item.id}`}
     >
-      <img
-        className="object-contain h-50 w-50 mx-auto"
-        src={item.images[0]}
-        alt={item.title}
-        loading="lazy"
-      />
+      {item.images.length == 1 ? (
+        <img
+          className="object-contain h-50 w-50 mx-auto"
+          src={item.images[0]}
+          alt={item.title}
+          loading="lazy"
+        />
+      ) : (
+        <figure className="hover-gallery">
+          {item.images.map((image) => (
+            <img
+              className="object-contain h-50 w-50 mx-auto"
+              src={image}
+              alt={item.title}
+              loading="lazy"
+            />
+          ))}
+        </figure>
+      )}
       <p className="text-gray-500 mt-3">{item.category}</p>
       <div className="mt-1 flex flex-col text-[14px]">
         <h3 className="font-[550] text-md line-clamp-1">{item.title}</h3>
@@ -409,8 +421,11 @@ export default function Products() {
         >
           {loading ? (
             Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="skeleton h-40 sm:h-60 grid place-items-center">
-                <Image className='text-gray-400'/>
+              <div
+                key={i}
+                className="skeleton h-40 sm:h-60 grid place-items-center"
+              >
+                <Image className="text-gray-400" />
               </div>
             ))
           ) : products.length === 0 ? (
