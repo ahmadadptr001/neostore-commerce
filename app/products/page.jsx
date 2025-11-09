@@ -1,6 +1,6 @@
 'use client';
 import { getAllCategories, getAllProducts } from '../../services/products';
-import { Search, Star, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Search, Star, ArrowLeft, ArrowRight, Image } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -409,7 +409,9 @@ export default function Products() {
         >
           {loading ? (
             Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="skeleton h-40 sm:h-60"></div>
+              <div key={i} className="skeleton h-40 sm:h-60 grid place-items-center">
+                <Image className='text-gray-400'/>
+              </div>
             ))
           ) : products.length === 0 ? (
             <div className="p-3 col-span-3">
