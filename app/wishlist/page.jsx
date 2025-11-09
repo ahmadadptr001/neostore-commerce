@@ -100,7 +100,7 @@ export default function WishListPage() {
         cartWish !== null ? (
           cartWish.map((item) => cardWishlist(item))
         ) : (
-          <span className="text-error">Empty</span>
+          <span className="text-error min-h-50">Empty</span>
         )}
       </section>
     </main>
