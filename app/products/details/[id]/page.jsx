@@ -80,7 +80,7 @@ export default function DetailProduct() {
           stock: data?.stock ?? 0,
           discountPercentage: data?.discountPercentage ?? 0,
           sku: data?.sku ?? '',
-          tags: data?.sku ?? '',
+          tags: data?.tags ?? '',
           brand: data?.brand ?? '',
           quantity: quantity,
         });
