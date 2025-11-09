@@ -344,11 +344,11 @@ export default function Products() {
       <div className="md:col-span-2 md:order-2 order-1 col-span-3 p-4 flex flex-col justify-center">
         <label
           htmlFor="search-products"
-          className="mt-4 mx-auto w-full md:mx-0 max-w-md rounded-md p-3 bg-gray-200 flex items-center justify-between"
+          className="mt-4 mx-auto w-full md:mx-0 max-w-md rounded-md p-3 bg-gray-200 flex gap-3 items-center justify-between"
         >
           <Search size={20} />
           <input
-            className="input-none w-full text-end"
+            className="input-none w-full"
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
