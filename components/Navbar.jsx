@@ -145,7 +145,7 @@ export default function Navbar() {
                 <Heart size={17} />
               </Link>
               <div className="badge badge-info rounded-full text-xs absolute -right-4 -top-4 py-0 px-2">
-                {lengthCartWish}
+                {lengthCartWish.length !== 0 ? lengthCartWish : '0'}
               </div>
             </li>
             <li className="relative">
@@ -153,7 +153,7 @@ export default function Navbar() {
                 <ShoppingCart size={17} />
               </Link>
               <div className="badge badge-error rounded-full text-xs absolute -right-4 -top-4 py-0 px-2">
-                {lengthCartProducts}
+                {lengthCartProducts.length !== 0 ? lengthCartProducts : '0'}
               </div>
             </li>
             <li>
