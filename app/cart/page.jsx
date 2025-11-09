@@ -69,6 +69,7 @@ export default function CartProducts() {
   const handleAddWishList = (item) => {
     addToWishList(item);
     setViewNotifWish(true);
+    window.location.reload();
   };
 
   const cardCartProducts = (item) => {
