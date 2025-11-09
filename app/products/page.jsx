@@ -105,12 +105,13 @@ export default function Products() {
         />
       ) : (
         <figure className="hover-gallery">
-          {item.images.map((image) => (
+          {item.images.map((image, i) => (
             <img
-              className="object-contain h-50 w-50 mx-auto"
-              src={image}
-              alt={item.title}
-              loading="lazy"
+            key={i}
+            src={image}
+            alt={item.title}
+            loading="lazy"
+            className="object-contain h-50 w-50 mx-auto"
             />
           ))}
         </figure>
