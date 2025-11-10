@@ -1,108 +1,246 @@
 'use client';
 
-import { getPriceDiscount } from '../../utils/products';
-import { Eye, ShoppingBag, ShoppingCart } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Eye, ShoppingBag, Trash2, ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion'; // opsional
+import { getPriceDiscount } from '../../utils/products';
 
-export default function WishListPage() {
-  const [cartWish, setCartWish] = useState([]);
+const STORAGE_KEY = 'cart-storage';
 
-  useEffect(() => {
-    const carts = JSON.parse(localStorage.getItem('cart-storage'));
+function formatCurrency(val) {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+}
 
-    if (carts) {
-      setCartWish(carts.state.wishlist);
-    }
-  }, []);
+function safeParseStorage() {
+  try {
+    const raw = typeof window !== 'undefined' && localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    console.warn('Failed to parse storage', e);
+    return null;
+  }
+}
 
-  const cardWishlist = (item) => {
-    const priceHaveDiscount = getPriceDiscount(
-      item.discountPercentage,
-      item.price
-    );
-    return (
-      <div className="flex flex-col sm:flex-row gap-7 w-full border-3 shadow-md border-gray-300 p-4 rounded-md">
-        <div className="w-full">
+function SkeletonCard() {
+  return (
+    <div className="animate-pulse bg-white rounded-lg shadow p-4">
+      <div className="flex gap-4">
+        <div className="w-28 h-28 bg-slate-200 rounded-md" />
+        <div className="flex-1">
+          <div className="h-4 bg-slate-200 rounded w-3/4 mb-3" />
+          <div className="h-3 bg-slate-200 rounded w-1/3 mb-2" />
+          <div className="h-8 bg-slate-200 rounded w-1/4" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const WishCard = ({ item, onRemove, onMoveToCart }) => {
+  const priceHaveDiscount = useMemo(
+    () => getPriceDiscount(item.discountPercentage, item.price),
+    [item.discountPercentage, item.price]
+  );
+
+  return (
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.98 }}
+      className="bg-white rounded-lg shadow-md overflow-hidden border border-slate-200"
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 items-center">
+        {/* Image + thumbs */}
+        <div className="flex flex-col items-center sm:items-start">
           <img
-            src={item.images[0]}
+            src={item.images?.[0] ?? '/placeholder.png'}
             alt={item.title}
-            className="mx-auto w-50 object-contain"
+            loading="lazy"
+            className="w-full max-w-[220px] h-[160px] object-contain rounded-md bg-white"
           />
-          <div className="flex items-center gap-2 mt-3 justify-center">
-            {item.images.map((image_, i) => (
-              <div key={i} className="outline outline-gray-400 rounded-md">
-                <img
-                  src={image_}
-                  alt="image-sh"
-                  className="w-32 object-contain"
-                />
-              </div>
+          <div className="flex gap-2 mt-3">
+            {(item.images ?? []).slice(0, 4).map((src, i) => (
+              <button
+                key={i}
+                type="button"
+                className="w-14 h-10 rounded-md outline outline-1 outline-slate-200 hover:scale-105 transition-transform"
+                aria-label={`thumbnail-${i}`}
+                onClick={(e) => {
+                  e.currentTarget.closest('article')?.querySelector('img')?.setAttribute('src', src);
+                }}
+              >
+                <img src={src} alt={`thumb-${i}`} className="w-full h-full object-contain" loading="lazy" />
+              </button>
             ))}
           </div>
         </div>
 
-        <div className="w-full sm:w-1/2">
-          <div className="flex items-center gap-1 flex-wrap justify-center sm:justify-start">
-            {item.tags.map((tag) => (
-              <span className="badge badge-warning">{tag}</span>
+        {/* Title + tags + brand */}
+        <div className="sm:col-span-1 flex flex-col gap-2">
+          <div className="flex flex-wrap gap-2">
+            {(item.tags ?? []).map((t, idx) => (
+              <span key={idx} className="text-xs font-medium bg-amber-100 text-amber-800 px-2 py-1 rounded">
+                {t}
+              </span>
             ))}
           </div>
 
-          <p className="h3 font-semibold text-xl mt-2 line-clamp-2 sm:text-start text-center">{item.title}</p>
-          <small className="text-gray-500 flex items-center gap-1 justify-center sm:justify-start">
-            brand: <span className="text-gray-900">{item.brand}</span>
-          </small>
+          <h3 className="text-lg font-semibold line-clamp-2">{item.title}</h3>
+          <p className="text-sm text-slate-500">Brand: <span className="text-slate-800">{item.brand}</span></p>
 
-          {/* price */}
-          <div className="flex flex-col mt-3 text-end">
-            <small className="line-through">$ {item.price}</small>
-            <h3 className="text-3xl font-bold">${priceHaveDiscount}</h3>
-            <small className="text-success">
-              Save ${(item.price - priceHaveDiscount).toFixed(2)}
-            </small>
-          </div>
-          
-          {/* button */}
-          <div className="mt-4">
-            <Link href={`/products/details/${item.id}`} className="btn btn-lg w-full flex items-center gap-2 btn-info text-base">
+          <div className="mt-2 flex items-center gap-3">
+            <Link href={`/products/details/${item.id}`} className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-sky-600 text-white hover:bg-sky-700 transition">
               <Eye size={16} /> Detail
+            </Link>
+            <button
+              onClick={() => onMoveToCart(item)}
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 transition"
+              aria-label="move-to-cart"
+            >
+              <ShoppingCart size={16} /> Move to Cart
+            </button>
+          </div>
+        </div>
+
+        {/* Price + actions */}
+        <div className="flex flex-col items-end gap-3">
+          <div className="text-right">
+            <div className="text-sm text-slate-400 line-through">{formatCurrency(item.price)}</div>
+            <div className="text-2xl font-bold">{formatCurrency(priceHaveDiscount)}</div>
+            <div className="text-sm text-emerald-600">Save {formatCurrency(item.price - priceHaveDiscount)}</div>
+          </div>
+
+          <div className="flex gap-2">
+            <button
+              onClick={() => onRemove(item.id)}
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-red-50 text-red-700 hover:bg-red-100 transition"
+              aria-label="remove-wishlist"
+            >
+              <Trash2 size={16} /> Remove
+            </button>
+            <Link href="/products" className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-slate-100 hover:bg-slate-200 transition">
+              <ShoppingBag size={16} /> Continue Shopping
             </Link>
           </div>
         </div>
       </div>
-    );
-  };
+    </motion.article>
+  );
+};
+
+export default function WishListPage() {
+  const [cartWish, setCartWish] = useState(null); // null = loading, [] = empty
+  const [toast, setToast] = useState(null);
+
+  useEffect(() => {
+    // load
+    const data = safeParseStorage();
+    const wishlist = data?.state?.wishlist ?? [];
+    setCartWish(wishlist);
+  }, []);
+
+  const persist = useCallback(
+    (nextWishlist) => {
+      try {
+        const raw = safeParseStorage() || { state: { wishlist: [] } };
+        raw.state = { ...(raw.state || {}), wishlist: nextWishlist };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(raw));
+      } catch (e) {
+        console.warn('persist fail', e);
+      }
+    },
+    []
+  );
+
+  const handleRemove = useCallback(
+    (id) => {
+      const next = (cartWish ?? []).filter((it) => it.id !== id);
+      setCartWish(next);
+      persist(next);
+      setToast({ type: 'info', text: 'Removed from wishlist' });
+      setTimeout(() => setToast(null), 2000);
+    },
+    [cartWish, persist]
+  );
+
+  const handleMoveToCart = useCallback(
+    (item) => {
+      // simple move-to-cart logic: remove from wishlist and add to cart array in storage
+      const storage = safeParseStorage() || { state: { wishlist: [], cart: [] } };
+      const currentCart = storage.state.cart ?? [];
+      const already = currentCart.find((c) => c.id === item.id);
+      const nextCart = already ? currentCart : [...currentCart, { ...item, quantity: already ? already.quantity : 1 }];
+      const nextWish = (cartWish ?? []).filter((it) => it.id !== item.id);
+
+      storage.state = { ...storage.state, cart: nextCart, wishlist: nextWish };
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(storage));
+        setCartWish(nextWish);
+        setToast({ type: 'success', text: 'Moved to cart' });
+        setTimeout(() => setToast(null), 2000);
+      } catch (e) {
+        console.warn(e);
+        setToast({ type: 'error', text: 'Action failed' });
+        setTimeout(() => setToast(null), 2000);
+      }
+    },
+    [cartWish]
+  );
 
   return (
-    <main className="p-4">
-      {/* header section */}
-      <section className="flex items-centeer flex-wrap justify-between mx-auto container gap-2">
-        <p className="flex flex-col gap-1">
-          <span className="text-3xl font-bold">My Whislist</span>
-          <span className="text-gray-500">
-            {cartWish?.length} item saved for later
-          </span>
-        </p>
+    <main className="p-6 max-w-6xl mx-auto">
+      {/* Header */}
+      <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <h1 className="text-3xl font-extrabold">My Wishlist</h1>
+          <p className="text-sm text-slate-500">
+            {cartWish === null ? 'Loading...' : `${cartWish.length} item${(cartWish.length ?? 0) === 1 ? '' : 's'} saved for later`}
+          </p>
+        </div>
 
-        <Link
-          href="/products"
-          className="btn btn-secondary btn-soft btn-md flex items-center"
-        >
-          <ShoppingBag size={15} /> Shopping
-        </Link>
+        <div className="flex gap-2">
+          <Link href="/products" className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-slate-100 hover:bg-slate-200">
+            <ShoppingBag size={16} /> Shopping
+          </Link>
+        </div>
       </section>
 
-      {/* card wishlist */}
-      <section className="mt-5 container mx-auto flex flex-col gap-2">
-        {cartWish.length !== 0 &&
-        cartWish !== undefined &&
-        cartWish !== null ? (
-          cartWish.map((item) => cardWishlist(item))
+      {/* List */}
+      <section className="grid grid-cols-1 gap-4">
+        {cartWish === null ? (
+          // show skeletons
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : cartWish.length === 0 ? (
+          <div className="text-center py-20 bg-white rounded-md shadow-sm">
+            <p className="text-xl font-medium mb-2">Your wishlist is empty</p>
+            <p className="text-sm text-slate-500 mb-4">Add items you love and come back later</p>
+            <Link href="/products" className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-sky-600 text-white">
+              Browse products
+            </Link>
+          </div>
         ) : (
-          <span className="text-error min-h-50">Empty</span>
+          <AnimatePresence>
+            {cartWish.map((item) => (
+              <WishCard key={item.id} item={item} onRemove={handleRemove} onMoveToCart={handleMoveToCart} />
+            ))}
+          </AnimatePresence>
         )}
       </section>
+
+      {/* Toast */}
+      <div aria-live="polite" className="fixed bottom-6 right-6">
+        {toast && (
+          <div className={`px-4 py-2 rounded-md shadow ${toast.type === 'success' ? 'bg-emerald-600 text-white' : toast.type === 'error' ? 'bg-red-600 text-white' : 'bg-slate-700 text-white'}`}>
+            {toast.text}
+          </div>
+        )}
+      </div>
     </main>
   );
 }
