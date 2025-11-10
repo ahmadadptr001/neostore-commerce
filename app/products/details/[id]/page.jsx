@@ -286,6 +286,7 @@ export default function DetailProduct() {
                   <button
                     className="btn btn-secondary w-full py-6"
                     onClick={handleToCart}
+                    disabled={stock ? false: true}
                   >
                     <ShoppingCart size={18} /> Add to Cart
                   </button>
